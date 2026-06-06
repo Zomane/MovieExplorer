@@ -1,0 +1,26 @@
+.link {
+    text-decoration: none;
+    color: white;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    border-bottom: 1px solid #30363d;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.loginNav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+

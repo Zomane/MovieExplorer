@@ -1,0 +1,33 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #30363d;
+    padding: 12px;
+
+    width: 220px;
+    min-height: 200px;
+
+    text-align: center;
+    gap: 20px;
+
+    border-radius: 10px;
+}
+
+.navButton {
+    background-color:#1c2a3a;
+    color: rgb(221, 221, 221);
+    border: 1px solid #30363d;
+    border-radius: 10px;
+    width: 90px;
+    height: 35px;
+    cursor: pointer;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+    
+}
+
+.navButton:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 15px rgba(3, 62, 110, 0.5);
+}

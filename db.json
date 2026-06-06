@@ -1,0 +1,36 @@
+{
+  "movies": [
+    {
+      "id": "1",
+      "title": "Человек-Паук",
+      "body": "Крутой фильм ваще топовый в актерах крутые чуваки и им ваще пох они реально крутые бля короч забейте они форил крутые топовые поцаны и кино топовое"
+    },
+    {
+      "id": "2",
+      "title": "Бетмен",
+      "body": "Описание крутое для бетмена"
+    },
+    {
+      "title": "Пацаны",
+      "body": "Крутой сериал про крутых пациков на поциках",
+      "id": "wJjlS1kTQQc"
+    }
+  ],
+  "registredUsers": [
+    {
+      "id": "1",
+      "login": "stsipa",
+      "pass": "123123",
+      "email": "goodwaitik@gmail.com",
+      "role": "user"
+    },
+    {
+      "login": "111",
+      "pass": "111",
+      "email": "good@gmail.com",
+      "role": "admin",
+      "id": "cSxJqUPlI3U"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

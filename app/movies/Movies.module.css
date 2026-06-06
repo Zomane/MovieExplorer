@@ -1,0 +1,40 @@
+.cardList {
+    display: grid;
+
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(220px, 220px)
+    );
+
+    justify-content: center;
+
+    width: 100%;
+    gap: 50px;
+}
+
+.moviePage {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.search {
+    background-color: black;
+    border: 1px solid #30363d;
+    border-radius: 15px;
+    padding: 8px;
+    padding-left: 12;
+    width: 220px;
+    color: rgb(221, 221, 221);
+}
+
+.search:focus {
+    outline: none;
+
+    border-color: #30363d;
+
+    box-shadow: 0 0 8px rgba(0, 255, 221, 0.3);
+} 
