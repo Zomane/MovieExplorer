@@ -5,18 +5,23 @@ import MovieCard from "@/components/movies/MovieCard"
 import { useMovies } from "@/hooks/useMovies"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
+import { useToggleSaveMovie, useUserById } from '@/hooks/useUsers'
 
 
 export default function MoviesPage() {
-
+    const userId = '1'
+    
     const { data: movies, isLoading, error, isError } = useMovies()
+    const { data: user } = useUserById(userId)
 
     const router = useRouter()
     const searchParams = useSearchParams()
 
     const q = searchParams.get('q') ?? ''
-
     const [search, setSearch] = useState(q)
+
+
+
 
     useEffect(() => {
         setSearch(q)
@@ -48,9 +53,24 @@ export default function MoviesPage() {
         },[router]
     )
 
+    const toggleMovieMutation = useToggleSaveMovie()
+
+    const handleSave = useCallback(
+        (movieId: string) => {
+            toggleMovieMutation.mutate({
+                userId: userId,
+                movieId
+            })
+        }, [toggleMovieMutation, userId]
+    )
+
     const filteredMovies = useMemo(() => 
         (movies ?? []).filter(movie => movie.title.toLowerCase().includes(q.toLowerCase())
     ),[movies, q])
+
+    if(!user){
+        return <h1>Для начала войдите в аккаунт</h1>
+    }
 
     return (
         <div className={styles.moviePage}>
@@ -63,7 +83,7 @@ export default function MoviesPage() {
        
             <div className={styles.cardList}>
                 {filteredMovies.map(movie => (
-                    <MovieCard key={movie.id} movie={movie} onNavigate={handleNav}/>
+                    <MovieCard key={movie.id} movie={movie} user={user} onNavigate={handleNav} onSave={handleSave}/>
                 ))}
             </div>
         </div>

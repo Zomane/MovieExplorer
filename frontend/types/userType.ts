@@ -4,4 +4,5 @@ export type User = {
     pass: string;
     role: 'user' | 'admin';
     email: string;
+    savedMovieIds: string[];
 }

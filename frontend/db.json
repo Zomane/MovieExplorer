@@ -19,17 +19,53 @@
   "registredUsers": [
     {
       "id": "1",
-      "login": "stsipa",
-      "pass": "123123",
+      "login": "Andrew",
+      "pass": "123",
       "email": "goodwaitik@gmail.com",
-      "role": "user"
+      "role": "user",
+      "savedMovieIds": []
     },
     {
-      "login": "111",
+      "login": "Admin",
       "pass": "111",
       "email": "good@gmail.com",
       "role": "admin",
-      "id": "cSxJqUPlI3U"
+      "id": "cSxJqUPlI3U",
+      "savedMovieIds": []
+    },
+    {
+      "id": "2",
+      "login": "Anna",
+      "pass": "123",
+      "email": "1@gmail.com",
+      "role": "user",
+      "savedMovieIds": []
+    },
+    {
+      "id": "3",
+      "login": "Liza",
+      "pass": "123",
+      "email": "12@gmail.com",
+      "role": "user",
+      "savedMovieIds": [
+        "2"
+      ]
+    },
+    {
+      "id": "4",
+      "login": "Paul",
+      "pass": "123",
+      "email": "123@gmail.com",
+      "role": "user",
+      "savedMovieIds": []
+    },
+    {
+      "id": "5",
+      "login": "Marina",
+      "pass": "123",
+      "email": "1234@gmail.com",
+      "role": "user",
+      "savedMovieIds": []
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -1,4 +1,4 @@
-import { User } from "@/types/user";
+import { User } from "@/types/userType";
 import React from "react";
 
 type Params = {

@@ -1,4 +1,4 @@
-import { type Movie } from "@/types/movie";
+import { type Movie } from "@/types/movieType";
 
 export async function getMovies(): Promise<Movie[]> {
     const res = await fetch('http://localhost:3001/movies')
@@ -17,3 +17,4 @@ export async function getMovieById(id: string): Promise<Movie> {
     
     return await res.json()
 }
+
