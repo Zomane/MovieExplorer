@@ -1,0 +1,15 @@
+# Root Turbopack cache
+.next
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Env
+.env
+.env.local
+.env.production
+.env.development
