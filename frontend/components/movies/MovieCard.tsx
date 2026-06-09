@@ -1,6 +1,5 @@
 'use client'
 
-import { useUserById } from '@/hooks/useUsers';
 import styles from './MovieCard.module.css'
 import { type Movie } from "@/types/movieType"
 import React from "react";
@@ -10,7 +9,7 @@ type Props = {
     movie: Movie;
     onNavigate: (id: string) => void
     onSave: (id: string) => void
-    user?: User
+    user: User | null
 }
 
 const MovieCard = React.memo(function MovieCard({movie, onNavigate, onSave, user}: Props){

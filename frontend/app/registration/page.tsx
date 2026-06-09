@@ -37,7 +37,7 @@ export default function Registration() {
                     required: 'Введите логин',
                     minLength: {
                         value: 5,
-                        message: 'Логин должен содержать не меньше 5 символов'
+                        message: 'Логин должен содержать не менее 5 символов'
                     }
                 })}/>
 
@@ -47,7 +47,7 @@ export default function Registration() {
                     required: 'Введите пароль',
                     minLength: {
                         value: 8,
-                        message: 'Пароль должен содержать не меньше 8 символов'
+                        message: 'Пароль должен содержать не менее 8 символов'
                     }
                 })}/>
 

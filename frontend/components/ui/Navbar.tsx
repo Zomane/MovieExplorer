@@ -3,8 +3,10 @@
 import Link from 'next/link'
 import styles from './Navbar.module.css'
 import Image from 'next/image'
+import { useAuth } from '@/providers/AuthProvider'
 
 export default function Navbar(){
+    const auth = useAuth()
     return (
         <div className={styles.header}>
             <div className={styles.nav}>
@@ -13,9 +15,17 @@ export default function Navbar(){
                 <Link className={styles.link} href='/users'>Пользователи</Link>
             </div>
             <div className={styles.loginNav}>
-                <Link className={styles.link} href='/login'>Вход</Link>
-                <Link className={styles.link} href='/registration'>Регистрация</Link>
-                <Link className={styles.link} href='/profile'>Профиль</Link>
+                {!auth.token ? (
+                    <>
+                        <Link className={styles.link} href='/login'>Вход</Link> 
+                        <Link className={styles.link} href='/registration'>Регистрация</Link>
+                    </>
+                ) : (
+                    <>
+                        <Link className={styles.link} href='/profile'>Профиль</Link>
+                        <button onClick={auth.logout}>Выйти</button>
+                    </>
+                )}
             </div>
         </div>
     )

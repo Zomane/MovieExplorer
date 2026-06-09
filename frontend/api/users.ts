@@ -1,4 +1,5 @@
-import { RegisterDto, User } from "@/types/userType";
+import { LoginDto, RegisterDto, User } from "@/types/userType";
+
 
 export async function getUsers(): Promise<User[]> {
     const res = await fetch('http://localhost:3001/users')
@@ -18,7 +19,7 @@ export async function getUserById(id: string): Promise<User> {
     return await res.json()
 }
 
-export async function toggleSaveMovie(id: string, movieId: string): Promise<User> {
+export async function toggleSaveMovie(id: string, movieId: string, token: string): Promise<User> {
     
     const user = await getUserById(id);
 
@@ -28,10 +29,11 @@ export async function toggleSaveMovie(id: string, movieId: string): Promise<User
 
     const updatedMovieIds = isFavorite ? savedMovieIds.filter(id => id !== movieId) : [...savedMovieIds, movieId]
 
-    const res = await fetch(`http://localhost:3001/users/${id}`, {
+    const res = await fetch(`http://localhost:3001/users/${id}/favorites`, {
         method: 'PATCH',
         headers: {
-            'Content-Type':'application/json'
+            'Content-Type':'application/json',
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
             savedMovieIds: updatedMovieIds
@@ -70,5 +72,24 @@ export async function registerUser({login, email, pass}: RegisterDto): Promise<{
         )
     }
     
+    return await res.json()
+}
+
+export async function loginUser({login, pass}: LoginDto): Promise<{token: string, loginedUser: User}> {
+    const res = await fetch('http://localhost:3001/auth/login', {
+        method: 'POST',
+        headers: { 
+            'Content-Type':'application/json'
+        },
+        body: JSON.stringify({
+            login, 
+            pass
+        })
+    })
+    if(!res.ok) {
+        const errorData = await res.json()
+        throw new Error(errorData.message || 'Ошибка входа в аккаунт')
+    }
+
     return await res.json()
 }

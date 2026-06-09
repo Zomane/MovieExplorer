@@ -5,14 +5,18 @@ import MovieCard from "@/components/movies/MovieCard"
 import { useMovies } from "@/hooks/useMovies"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
-import { useToggleSaveMovie, useUserById } from '@/hooks/useUsers'
+import { useToggleSaveMovie } from '@/hooks/useUsers'
+import { useAuth } from '@/providers/AuthProvider'
 
 
 export default function MoviesPage() {
-    const userId = '1'
+
+    const [error, setError] = useState<string | null>(null)
+
+    const auth = useAuth()
+    const token = auth.token ?? ''
+    const { data: movies, isLoading, error: moviesError, isError: isMovieError } = useMovies()
     
-    const { data: movies, isLoading, error, isError } = useMovies()
-    const { data: user } = useUserById(userId)
 
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -53,24 +57,42 @@ export default function MoviesPage() {
         },[router]
     )
 
-    const toggleMovieMutation = useToggleSaveMovie()
+    const toggleMovieMutation = useToggleSaveMovie({token, updateUser: auth.updateUser, user: auth.user})
 
     const handleSave = useCallback(
         (movieId: string) => {
+            if(!token || !auth.user){
+                setError('Для сохранения фильма войдите в аккаунт')
+                return
+            }
             toggleMovieMutation.mutate({
-                userId: userId,
+                userId: auth.user.id,
                 movieId
-            })
-        }, [toggleMovieMutation, userId]
+            }, {
+                onError: (error) => {
+                    setError(error.message)
+                }
+            }
+            
+        )
+        }, [toggleMovieMutation, auth.user, token]
     )
+
+    useEffect(() => {
+        if (!error) return
+
+        const timer = setTimeout(() => {
+            setError(null)
+        }, 2000)
+
+        return () => clearTimeout(timer)
+    }, [error])
 
     const filteredMovies = useMemo(() => 
         (movies ?? []).filter(movie => movie.title.toLowerCase().includes(q.toLowerCase())
     ),[movies, q])
 
-    if(!user){
-        return <h1>Для начала войдите в аккаунт</h1>
-    }
+
 
     return (
         <div className={styles.moviePage}>
@@ -78,14 +100,16 @@ export default function MoviesPage() {
             <input className={styles.search} value={search} placeholder="Введите название" onChange={(e) => setSearch(e.target.value)}/>
 
             {isLoading && <h3>Загрузка...</h3>}
-            {!isLoading && isError && <h3>{error.message}</h3>}
-            {!isLoading && !isError && filteredMovies.length === 0 && <p>{'Такого фильма не существует :('}</p>}
+            {!isLoading && isMovieError && <h3>{moviesError.message}</h3>}
+            {!isLoading && !isMovieError && filteredMovies.length === 0 && <p>{'Такого фильма не существует :('}</p>}
        
             <div className={styles.cardList}>
                 {filteredMovies.map(movie => (
-                    <MovieCard key={movie.id} movie={movie} user={user} onNavigate={handleNav} onSave={handleSave}/>
+                    <MovieCard key={movie.id} movie={movie} user={auth.user} onNavigate={handleNav} onSave={handleSave}/>
                 ))}
             </div>
+            {error && <h3>{error}</h3>}
+            
         </div>
     )
 }

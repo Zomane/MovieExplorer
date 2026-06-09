@@ -4,7 +4,8 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
 import { UserEntity } from './types/user'
-
+import { MovieEntity } from './types/movie'
+import { Request, Response, NextFunction } from 'express'
 
 dotenv.config()
 const JWT_SECRET = process.env.JWT_SECRET
@@ -25,31 +26,112 @@ app.listen( 3001, () => {
   console.log('Server started')
 })
 
-const users: UserEntity[] = []
+const users: UserEntity[] = [
+    {
+        id:"1781024263801",
+        login:"stsipa",
+        email:"step.tsipa@gmail.com",
+        role:"user",
+        pass:"$2b$10$wLo7kFr3zaljCx2vOZ.Kj.yfRQBFjphgE.o9t8mVaDvqeNQmWcLWa",
+        savedMovieIds:[]
+    },
+    {
+        id:"1781024275492",
+        login:"stsipa1",
+        email:"tsybulkin.step@mail.ru",
+        role:"user",
+        pass:"$2b$10$iodiR5STz3xkHEHieWkZFeNj3H5tsw2sEgzkTcyNdm0wSuZF3a7ki",
+        savedMovieIds:[]
+    }
+]
 
-const movies = [
+const movies: MovieEntity[] = [
     {
         id: '1',
         title: 'Batman',
-        description: 'Good movie about rich strong guy by DC'
+        description: 'Good movie about rich strong guy by DC',
+        director: 'Christopher Nolan'
     },
     {
         id: '2',
         title: 'Spider-Man',
-        description: 'Good superheroic movie by Marvel'
+        description: 'Good superheroic movie by Marvel',
+        director: 'Sam Raimi'
+    }, 
+    {
+        id: '3',
+        title: 'Breaking Bad',
+        description: 'The best series about drugs in the world',
+        director: 'Bryan Cranston'
+    },
+    {
+        id: '4',
+        title: 'Shutter Island',
+        description: 'An exciting film about a detective leading an investigation on an island',
+        director: 'Martin Scorsese'
     }
 ]
+
+function authMiddleware(req: Request, res: Response, next: NextFunction) {
+    try {
+        const authHeader = req.headers.authorization
+
+        if (!authHeader) {
+            return res.status(401).json({
+                message: 'Токен отсутствует'
+            })
+        }
+
+        const token = authHeader.split(' ')[1]
+
+        if (!JWT_SECRET) {
+            throw new Error('JWT_SECRET not found')
+        }
+
+        const payload = jwt.verify(token, JWT_SECRET)
+
+        next()
+    } catch {
+        return res.status(401).json({
+            message: 'Невалидный токен'
+        })
+    }
+}
+
 
 app.get('/movies', (req, res) => {
     res.json(movies)
 })
 
-app.patch('/users/:id', (req, res) => {
-    
-})
+// app.patch('/users/:id', (req, res) => {
 
-app.patch('/users/:id/favorites', (res, req) => {
-    
+// })
+
+
+app.patch('/users/:id/favorites', authMiddleware, (req, res) => {
+    const user = users.find(user => user.id === req.params.id)
+    if(!user){
+        return res.status(404).json({
+            message: 'Пользователь не найден'
+        })
+    }
+    const { savedMovieIds } = req.body
+
+    if (!Array.isArray(savedMovieIds)) {
+        return res.status(400).json({
+            message: 'savedMovieIds должен быть массивом'
+        })
+    }
+
+    user.savedMovieIds = savedMovieIds
+
+    return res.json({
+        id: user.id,
+        login: user.login,
+        email: user.email,
+        role: user.role,
+        savedMovieIds: user.savedMovieIds
+    })
 })
 
 
@@ -70,7 +152,8 @@ app.post('/movies', (req, res) => {
     const newMovie = {
         id: Date.now().toString(),
         title: req.body.title,
-        description: req.body.description
+        description: req.body.description,
+        director: req.body.director
     }
 
     movies.push(newMovie)
@@ -97,7 +180,6 @@ app.delete('/movies/:id', (req, res) => {
 })
 
 app.get('/users', (req, res) => {
-    console.log('EXPRESS USERS ROUTE')
     const usersWithoutPass = users.map(user => ({
         id: user.id,
         login: user.login,
@@ -180,7 +262,7 @@ app.post('/auth/register', async(req, res) => {
             role: 'user',
             savedMovieIds: []
         }
-        console.log('EXPRESS USERS ROUTE')
+        
         users.push(newUser)
         res.status(201).json({
             message: 'Пользователь успешно зарегистрирован'
@@ -228,7 +310,14 @@ app.post('/auth/login', async(req, res) => {
             expiresIn: '7d'
         })
 
-        return res.status(200).json({token})
+        const loginedUser = {
+            id: userLogin.id,
+            login: userLogin.login,
+            email: userLogin.email,
+            role: userLogin.role,
+            savedMovieIds: userLogin.savedMovieIds
+        }
+        return res.status(200).json({token, loginedUser})
     }catch{
         return res.status(500).json({
             message: 'Ошибка сервера'
