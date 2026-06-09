@@ -7,7 +7,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 export default function UsersPage(){
     const {data: users, isLoading, error, isError} = useUsers()
-
+    console.log(users)
     const router = useRouter()
     const searchParams = useSearchParams()
     const q = searchParams.get('q') ?? ''

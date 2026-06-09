@@ -1,4 +1,4 @@
-import { getUserById, getUsers, toggleSaveMovie } from "@/api/users";
+import { getUserById, getUsers, registerUser, toggleSaveMovie } from "@/api/users";
 import { User } from "@/types/userType";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -33,8 +33,10 @@ export function useToggleSaveMovie(){
             })
 
             const previousUser = queryClient.getQueryData<User>(['user', userId])
+
             if(previousUser){
-                const updatedMovieIds = previousUser.savedMovieIds.includes(movieId) ? previousUser.savedMovieIds.filter(id => id !== movieId): [...previousUser.savedMovieIds, movieId]
+                const savedMovieIds = previousUser.savedMovieIds ?? []
+                const updatedMovieIds = savedMovieIds.includes(movieId) ? savedMovieIds.filter(id => id !== movieId): [...savedMovieIds, movieId]
                 queryClient.setQueryData<User>(
                     ['user', userId],
                     {
@@ -54,4 +56,11 @@ export function useToggleSaveMovie(){
             })
         }
     })
+}
+
+export function useRegisterUser() {
+    const mutation = useMutation({
+        mutationFn: registerUser
+    })
+    return mutation
 }

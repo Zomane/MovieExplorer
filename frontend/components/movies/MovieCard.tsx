@@ -15,8 +15,9 @@ type Props = {
 
 const MovieCard = React.memo(function MovieCard({movie, onNavigate, onSave, user}: Props){
 
-    const miniDescription = movie.body.length > 30 ? movie.body.slice(0, 30) : movie.body
-    const isSaved = user?.savedMovieIds.includes(movie.id)
+    const miniDescription = movie.description.length > 30 ? movie.description.slice(0, 30) : movie.description
+    const savedMovieIds = user?.savedMovieIds ?? []
+    const isSaved = savedMovieIds.includes(movie.id)
     return (
         <div className={`${styles.card}`}>
             <h3>{movie.title}</h3>

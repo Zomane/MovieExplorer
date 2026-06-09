@@ -21,7 +21,7 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
 
   return {
     title: `Фильм: ${movie.title}`,
-    description: movie.body,
+    description: movie.description,
   }
 }
 
@@ -37,7 +37,7 @@ export default async function MoviePage({params}: Props) {
   return (
     <div>
       <h1>{movie.title}</h1>
-      <p>{movie.body}</p>
+      <p>{movie.description}</p>
     </div>
   )
 }
