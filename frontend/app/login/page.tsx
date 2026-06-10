@@ -44,8 +44,8 @@ export default function Login(){
         <div >
             <div className={styles.loginPage}>
                 <form className={styles.loginForm} onSubmit={handleSubmit(onLogin)}>
-                    <h1 className={styles.loginTitle}>Вход в аккаунт</h1>
-                    <input className={`${styles.loginInput} ${styles.input}`} placeholder="Введите логин" {...register('login', {
+                    <h1 className={styles.loginTitle}>Вход</h1>
+                    <input className={`${styles.input}`} placeholder="Введите логин" {...register('login', {
                         required: 'Введите логин',
                         minLength: {
                             value: 5,
@@ -53,7 +53,7 @@ export default function Login(){
                         }
                     })} />
 
-                    <input className={`${styles.passInput} ${styles.input}`} type='password' placeholder="Введите пароль" {...register('pass', {
+                    <input className={`${styles.input}`} type='password' placeholder="Введите пароль" {...register('pass', {
                         required: 'Введите пароль',
                         minLength: {
                             value: 8, 

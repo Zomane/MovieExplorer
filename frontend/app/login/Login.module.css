@@ -39,12 +39,6 @@
     outline: none;
     box-shadow: 0 0 0 3px rgba(68, 54, 146, 0.16);
 }
-
-.loginInput,
-.passInput {
-    width: 100%;
-}
-
 .loginBtn {
     width: 100%;
     max-width: 220px;
@@ -72,8 +66,21 @@
     text-align: left;
     opacity: 1;
     transition: opacity 0.5s ease;
+    text-align: center;
 }
 
 .hidden {
     opacity: 0;
+}
+
+.serverErrorText {
+    width: 100%;
+    max-width: 400px;
+    margin: 0;
+    color: #f87171;
+    font-size: 14px;
+    text-align: left;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    text-align: center;
 }

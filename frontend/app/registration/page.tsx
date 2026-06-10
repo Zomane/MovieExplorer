@@ -2,9 +2,10 @@
 
 import { useRegisterUser } from "@/hooks/useUsers";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { type RegisterDto } from "@/types/userType";
+import styles from './Register.module.css'
 
 export default function Registration() {
 
@@ -12,15 +13,18 @@ export default function Registration() {
     const {register, handleSubmit, formState:{errors}, reset} = useForm<RegisterDto>()
 
     const router = useRouter()
-
+    
+    const [isVisible, setIsVisible] = useState(false)
     const [error, setError] = useState<string | null>(null)
 
+    const formError = errors.login?.message || errors.email?.message || errors.pass?.message 
     const onRegister: SubmitHandler<RegisterDto> = async (formData) => {
         setError(null)
 
         registerMutation.mutate(formData, {
             onError: (error) => {
                 setError(error.message)
+                setIsVisible(true)
             },
             onSuccess: () => {
                 reset()
@@ -29,11 +33,21 @@ export default function Registration() {
         })
     }
 
+    useEffect(() => {
+        if(!error) return
+        const timer = setTimeout(()=>{
+            setError(null)
+        }, 2500)
+
+        return () => clearTimeout(timer)
+    }, [error])
+
     return (
-        <div className="registerPage">
-            <h1>Регистрация</h1>
-            <form onSubmit={handleSubmit(onRegister)}>
-                <input placeholder="Введите логин" {...register('login', {
+        <div className={styles.registerPage}>
+
+            <form className={styles.registerForm} onSubmit={handleSubmit(onRegister)}>
+                <h1 className={styles.registerTitle}>Регистрация</h1>
+                <input className={`${styles.input}`} placeholder="Введите логин" {...register('login', {
                     required: 'Введите логин',
                     minLength: {
                         value: 5,
@@ -41,9 +55,7 @@ export default function Registration() {
                     }
                 })}/>
 
-                {errors.login && <h3>{errors.login?.message}</h3>}
-
-                <input placeholder="Введите пароль" type='password' {...register('pass', {
+                <input className={`${styles.input}`} placeholder="Введите пароль" type='password' {...register('pass', {
                     required: 'Введите пароль',
                     minLength: {
                         value: 8,
@@ -51,9 +63,7 @@ export default function Registration() {
                     }
                 })}/>
 
-                {errors.pass && <h3>{errors.pass.message}</h3>} 
-
-                <input placeholder="Введите почту" type='email' {...register('email', {
+                <input className={`${styles.input}`} placeholder="Введите почту" type='email' {...register('email', {
                     required: 'Введите почту',
                     pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
@@ -61,11 +71,11 @@ export default function Registration() {
                     }
                 })}/>
 
-                {errors.email && <h3>{errors.email.message}</h3>}
+                {formError && <p className={styles.errorText}>{formError}</p>}
 
-                <button type='submit' disabled={registerMutation.isPending}>{registerMutation.isPending?'Регистрация...':'Зарегистрироваться'}</button>
+                <button type='submit' className={`${styles.registerBtn} `} disabled={registerMutation.isPending}>{registerMutation.isPending?'Регистрация...':'Зарегистрироваться'}</button>
 
-                {!registerMutation.isPending && error && <h3>{error}</h3>}
+                {!registerMutation.isPending && error && <p className={styles.errorText}>{error}</p>}
             </form>
         </div>
     )

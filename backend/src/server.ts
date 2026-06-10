@@ -262,7 +262,7 @@ app.post('/auth/register', async(req, res) => {
 
         if(/^[A-Za-z]+$/.test(pass) || /^\d+$/.test(pass)) {
             return res.status(400).json({
-                message: 'Пароль должен быть не меньше 8 символов'
+                message: 'Пароль должен содержать как минимум 1 букву и 1 цифру'
             })
         }
 
