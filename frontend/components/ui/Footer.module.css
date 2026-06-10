@@ -4,7 +4,13 @@
     padding: 20px;
     border-top: 1px solid #30363d;
     gap: 20px;
+    align-items: center;
 }
 .link {
     color: rgb(221, 221, 221);
+}
+.linkArea {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }

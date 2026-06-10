@@ -6,3 +6,8 @@ export type UserEntity = {
     email: string
     savedMovieIds: string[]
 }
+export type JwtPayload = {
+    id: string, 
+    login: string,
+    role: 'user' | 'admin'
+} 

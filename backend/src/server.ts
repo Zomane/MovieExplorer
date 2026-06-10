@@ -3,7 +3,7 @@ import cors from 'cors'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import { UserEntity } from './types/user'
+import { JwtPayload, UserEntity } from './types/user'
 import { MovieEntity } from './types/movie'
 import { Request, Response, NextFunction } from 'express'
 
@@ -72,7 +72,11 @@ const movies: MovieEntity[] = [
     }
 ]
 
-function authMiddleware(req: Request, res: Response, next: NextFunction) {
+type AuthRequest = Request & {
+    user?: JwtPayload
+}
+
+function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
     try {
         const authHeader = req.headers.authorization
 
@@ -88,7 +92,9 @@ function authMiddleware(req: Request, res: Response, next: NextFunction) {
             throw new Error('JWT_SECRET not found')
         }
 
-        const payload = jwt.verify(token, JWT_SECRET)
+        const payload = jwt.verify(token, JWT_SECRET) as JwtPayload
+
+        req.user = payload
 
         next()
     } catch {
@@ -108,13 +114,21 @@ app.get('/movies', (req, res) => {
 // })
 
 
-app.patch('/users/:id/favorites', authMiddleware, (req, res) => {
+app.patch('/users/:id/favorites', authMiddleware, (req: AuthRequest, res: Response) => {
+    if (req.user?.id !== req.params.id) {
+        return res.status(403).json({
+            message: 'Нет доступа'
+        })
+    }
+
     const user = users.find(user => user.id === req.params.id)
+    
     if(!user){
         return res.status(404).json({
             message: 'Пользователь не найден'
         })
     }
+    
     const { savedMovieIds } = req.body
 
     if (!Array.isArray(savedMovieIds)) {
