@@ -1,4 +1,4 @@
-import { getUserById, getUsers, loginUser, registerUser, toggleSaveMovie } from "@/api/users";
+import { getProfile, getUserById, getUsers, loginUser, registerUser, toggleSaveMovie } from "@/api/users";
 import { User } from "@/types/userType";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { type SaveMovieProps } from "@/types/apiType";
@@ -78,4 +78,14 @@ export function useLoginUser(){
         mutationFn: loginUser
     })
     return mutation
+}
+
+export function useUserProfile(token: string){
+    return useQuery({
+        queryKey: ['profile'],
+        queryFn: () => getProfile(token),
+        retry: 3,
+        refetchOnWindowFocus: false,
+        enabled: !!token    
+    })
 }

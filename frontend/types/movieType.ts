@@ -3,4 +3,5 @@ export type Movie = {
     title: string;
     description: string;
     director: string;
+    imgLink: string;
 }

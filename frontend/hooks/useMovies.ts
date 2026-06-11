@@ -1,4 +1,4 @@
-import { getMovieById, getMovies } from "@/api/movies";
+import { getMovieById, getMovies, getSavedMovies } from "@/api/movies";
 import { useQuery, useMutation } from "@tanstack/react-query";
 
 export function useMovies(){
@@ -16,5 +16,14 @@ export function useMovieByid(id: string){
         queryFn: () => getMovieById(id),
         enabled: !!id,
         retry: 3
+    })
+}
+
+export function useProfileMovies(id: string){
+    return useQuery({
+        queryKey: ['savedMovies', id],
+        queryFn: () => getSavedMovies(id),
+        retry: 3, 
+        enabled: !!id
     })
 }

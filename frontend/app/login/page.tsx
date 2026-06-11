@@ -8,13 +8,16 @@ import { useForm, type SubmitHandler } from "react-hook-form";
 import styles from './Login.module.css'
 
 export default function Login(){
-    const [error, setError] = useState<string | null>(null);
     const auth = useAuth()
-    const {register, handleSubmit, formState: {errors}, reset } = useForm<LoginDto>()
     const router = useRouter()
     const loginMutation = useLoginUser()
-    const [isVisible, setIsVisible] = useState(false)
+    const {register, handleSubmit, formState: {errors}, reset } = useForm<LoginDto>()
+    
+    const [error, setError] = useState<string | null>(null);
+    const [isVisible, setIsVisible] = useState(false) 
+
     const formError = errors.login?.message || errors.pass?.message
+
     const onLogin: SubmitHandler<LoginDto> = async (formData) => {
         setError(null)
         loginMutation.mutate(formData, {
@@ -32,12 +35,18 @@ export default function Login(){
 
     useEffect(() => {
         if(!error) return
-        const timer = setTimeout(()=>{
+        const hideTimer = setTimeout(() => {
+            setIsVisible(false)
+        }, 2000)
+        const removeTimer = setTimeout(()=>{
             setError(null)
-
+            setIsVisible(true)
         }, 2500)
 
-        return () => clearTimeout(timer)
+        return () => {
+            clearTimeout(hideTimer)
+            clearTimeout(removeTimer)
+        } 
     }, [error])
 
     return (

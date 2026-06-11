@@ -12,15 +12,15 @@ import { useAuth } from '@/providers/AuthProvider'
 export default function MoviesPage() {
 
     const [error, setError] = useState<string | null>(null)
+    const [isVisible, setIsVisible] = useState(false) 
 
     const auth = useAuth()
     const token = auth.token ?? ''
+
     const { data: movies, isLoading, error: moviesError, isError: isMovieError } = useMovies()
-    
-
     const router = useRouter()
-    const searchParams = useSearchParams()
 
+    const searchParams = useSearchParams()
     const q = searchParams.get('q') ?? ''
     const [search, setSearch] = useState(q)
 
@@ -63,6 +63,7 @@ export default function MoviesPage() {
         (movieId: string) => {
             if(!token || !auth.user){
                 setError('Для сохранения фильма войдите в аккаунт')
+                setIsVisible(true)
                 return
             }
             toggleMovieMutation.mutate({
@@ -80,19 +81,24 @@ export default function MoviesPage() {
 
     useEffect(() => {
         if (!error) return
+        const hideTimer = setTimeout(() => {
+            setIsVisible(false)
+        }, 2000)
 
         const timer = setTimeout(() => {
             setError(null)
-        }, 2000)
+            setIsVisible(false)
+        }, 2300)
 
-        return () => clearTimeout(timer)
+        return () => {
+            clearTimeout(timer)
+            clearTimeout(hideTimer)
+        }
     }, [error])
 
     const filteredMovies = useMemo(() => 
         (movies ?? []).filter(movie => movie.title.toLowerCase().includes(q.toLowerCase())
     ),[movies, q])
-
-
 
     return (
         <div className={styles.moviePage}>
@@ -108,7 +114,7 @@ export default function MoviesPage() {
                     <MovieCard key={movie.id} movie={movie} user={auth.user} onNavigate={handleNav} onSave={handleSave}/>
                 ))}
             </div>
-            {error && <h3>{error}</h3>}
+            {error && <p className={`${styles.errorText} ${!isVisible?styles.hidden:''}`}>{error}</p>}
             
         </div>
     )

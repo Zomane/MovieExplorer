@@ -18,3 +18,13 @@ export async function getMovieById(id: string): Promise<Movie> {
     return await res.json()
 }
 
+export async function getSavedMovies(id: string): Promise<Movie[]>{
+    const res = await fetch(`http://localhost:3001/savedMovies/${id}`)
+
+    if(!res.json){
+        const errorData = await res.json()
+        throw new Error(errorData || 'Ошибка сервера')
+    }
+
+    return res.json()
+}

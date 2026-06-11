@@ -50,25 +50,29 @@ const movies: MovieEntity[] = [
         id: '1',
         title: 'Batman',
         description: 'Good movie about rich strong guy by DC',
-        director: 'Christopher Nolan'
+        director: 'Christopher Nolan',
+        imgLink: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1704946/be4b776a-5ab6-42b4-9147-5c3ec6b53c44/600x900'
     },
     {
         id: '2',
         title: 'Spider-Man',
         description: 'Good superheroic movie by Marvel',
-        director: 'Sam Raimi'
+        director: 'Sam Raimi',
+        imgLink: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1946459/428e2842-4157-45e8-a9af-1e5245e52c37/300x450'
     }, 
     {
         id: '3',
         title: 'Breaking Bad',
         description: 'The best series about drugs in the world',
-        director: 'Bryan Cranston'
+        director: 'Bryan Cranston',
+        imgLink: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1900788/fb35416f-3b0d-4b96-bc65-cf6923f9e329/300x450'
     },
     {
         id: '4',
         title: 'Shutter Island',
         description: 'An exciting film about a detective leading an investigation on an island',
-        director: 'Martin Scorsese'
+        director: 'Martin Scorsese',
+        imgLink: 'https://avatars.mds.yandex.net/get-ott/224348/2a00000198528f853134273ea785844e1c8a/600x900'
     }
 ]
 
@@ -105,93 +109,8 @@ function authMiddleware(req: AuthRequest, res: Response, next: NextFunction) {
 }
 
 
-app.get('/movies', (req, res) => {
-    res.json(movies)
-})
+// users
 
-// app.patch('/users/:id', (req, res) => {
-
-// })
-
-
-app.patch('/users/:id/favorites', authMiddleware, (req: AuthRequest, res: Response) => {
-    if (req.user?.id !== req.params.id) {
-        return res.status(403).json({
-            message: 'Нет доступа'
-        })
-    }
-
-    const user = users.find(user => user.id === req.params.id)
-    
-    if(!user){
-        return res.status(404).json({
-            message: 'Пользователь не найден'
-        })
-    }
-    
-    const { savedMovieIds } = req.body
-
-    if (!Array.isArray(savedMovieIds)) {
-        return res.status(400).json({
-            message: 'savedMovieIds должен быть массивом'
-        })
-    }
-
-    user.savedMovieIds = savedMovieIds
-
-    return res.json({
-        id: user.id,
-        login: user.login,
-        email: user.email,
-        role: user.role,
-        savedMovieIds: user.savedMovieIds
-    })
-})
-
-
-
-app.get('/movies/:id', (req, res) => {
-    const movie = movies.find(movie => movie.id === req.params.id)
-
-    if(!movie){
-        return res.status(404).json({
-            message: 'Фильм не найден'
-        })
-    }
-
-    res.json(movie)
-})
-
-app.post('/movies', (req, res) => {
-    const newMovie = {
-        id: Date.now().toString(),
-        title: req.body.title,
-        description: req.body.description,
-        director: req.body.director
-    }
-
-    movies.push(newMovie)
-
-    res.status(201).json(newMovie)
-})
-
-app.delete('/movies/:id', (req, res) => {
-    const index = movies.findIndex(
-        movie => movie.id === req.params.id
-    )
-
-    if(index === -1){
-        return res.status(404).json({
-            message: 'Фильм не найден'
-        })
-    }
-
-    movies.splice(index, 1)
-
-    res.status(200).json({
-        message: 'Удалено'
-    })
-})
 
 app.get('/users', (req, res) => {
     const usersWithoutPass = users.map(user => ({
@@ -224,6 +143,123 @@ app.get('/users/:id', (req, res) => {
 
     res.json(userWithoutPass)
 })
+
+
+app.get('/profile', authMiddleware, (req: AuthRequest, res) => {
+
+    const user = users.find(user => user.id === req.user?.id)
+
+    if(!user) {
+        return res.status(404).json({
+            message: 'Пользователь не найден'
+        })  
+    }
+
+    const userWithoutPass = {
+        id: user.id,
+        login: user.login,
+        email: user.email,
+        role: user.role,
+        savedMovieIds: user.savedMovieIds
+    } 
+
+    return res.status(200).json(userWithoutPass)
+})
+
+app.patch('/users/:id/favorites', authMiddleware, (req: AuthRequest, res) => {
+    if (req.user?.id !== req.params.id) {
+        return res.status(403).json({
+            message: 'Нет доступа'
+        })
+    }
+
+    const user = users.find(user => user.id === req.params.id)
+    
+    if(!user){
+        return res.status(404).json({
+            message: 'Пользователь не найден'
+        })
+    }
+    
+    const { movieId } = req.body
+
+    const isFavorite = user.savedMovieIds.includes(movieId)
+
+    user.savedMovieIds = isFavorite ? user.savedMovieIds.filter(id => id !== movieId) : [...user.savedMovieIds, movieId]
+
+    const userWithoutPass = {
+        id: user.id,
+        login: user.login,
+        email: user.email,
+        role: user.role,
+        savedMovieIds: user.savedMovieIds
+    } 
+
+    return res.json(userWithoutPass)
+})
+
+// app.patch('/users/:id', (req, res) => {
+
+// })
+
+
+// movies
+
+app.get('/movies', (req, res) => {
+    res.json(movies)
+})
+
+app.get('/movies/:id', (req, res) => {
+    const movie = movies.find(movie => movie.id === req.params.id)
+
+    if(!movie){
+        return res.status(404).json({
+            message: 'Фильм не найден'
+        })
+    }
+
+    res.json(movie)
+})
+
+app.post('/movies', (req, res) => {
+    const newMovie = {
+        id: Date.now().toString(),
+        title: req.body.title,
+        description: req.body.description,
+        director: req.body.director,
+        imgLink: req.body.imgLink
+    }
+
+    movies.push(newMovie)
+
+    res.status(201).json(newMovie)
+})
+
+app.delete('/movies/:id', (req, res) => {
+    const index = movies.findIndex(
+        movie => movie.id === req.params.id
+    )
+
+    if(index === -1){
+        return res.status(404).json({
+            message: 'Фильм не найден'
+        })
+    }
+
+    movies.splice(index, 1)
+
+    res.status(200).json({
+        message: 'Удалено'
+    })
+})
+
+app.get('/savedMovies/:id', (req, res) => {
+    // реализация получения фильмов по savedMovieIds
+})
+
+
+// auth
+
 
 app.post('/auth/register', async(req, res) => {
     try {

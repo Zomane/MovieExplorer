@@ -3,13 +3,13 @@
 
     grid-template-columns: repeat(
         auto-fit,
-        minmax(220px, 220px)
+        minmax(280px, 280px)
     );
 
     justify-content: center;
 
     width: 100%;
-    gap: 50px;
+    gap: 30px;
 }
 
 .moviePage {
@@ -38,3 +38,15 @@
 
     box-shadow: 0 0 8px rgba(0, 255, 221, 0.3);
 } 
+
+.errorText {
+    margin: 0;
+    color: #f87171;
+    opacity: 1;
+    text-align: center;
+    transition: opacity 0.5s ease;
+}
+
+.hidden {
+    opacity: 0;
+}

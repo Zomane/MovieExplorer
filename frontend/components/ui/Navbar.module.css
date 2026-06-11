@@ -8,7 +8,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    padding: 10px 20px;
+    padding: 5px 20px;
     border-bottom: 1px solid #30363d;
 }
 
@@ -22,5 +22,99 @@
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block !important;
+
+}
+
+.dropdownContent {
+    position: absolute;
+    box-shadow: 0 4px 14px rgba(48, 48, 48, 0.35);
+    right: 0;
+    min-width: 120px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 12px 0px 12px 12px;
+    padding: 8px;
+    z-index: 100;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity .2s ease, transform .2s ease, visibility .2s ease;
+    pointer-events: none;
+    top: calc(100% + 12px);
+}
+
+.dropdown::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 15px;
+}
+
+.dropdown:hover .dropdownContent {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.dropdownLink {
+    display: block;
+    padding: 5px 5px;
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 12px;
+    border-radius: 8px;
+    text-align: center;
+    transition: background-color .2s ease;
+}
+
+.dropdownLink:hover {
+    background-color: #21262d;
+}
+
+.logout {
+    width: 100%;
+    padding: 5px;
+    background: none;
+    border: none;
+    color: #e2e8f0;
+    cursor: pointer;
+    font-size: 12px;
+    border-radius: 8px;
+    transition: background-color .2s ease;
+}
+
+.logout:hover {
+    background-color: #21262d;
+}
+
+.user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.dropdownContent > *:not(:last-child) {
+    position: relative;
+}
+
+.dropdownContent > *:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 15%;
+    bottom: -1px;
+    width: 70%;
+    height: 1px;
+    background: #30363d;
 }
 

@@ -6,13 +6,16 @@
     border: 1px solid #30363d;
     padding: 12px;
 
-    width: 220px;
-    min-height: 200px;
+    width: 280px;
+    min-height: 230px;
 
     text-align: center;
-    gap: 20px;
-
+    gap: 12px;
+    background-color: #0c0c0c;
     border-radius: 10px;
+    position: relative;
+
+    box-shadow: 0 0 10px #033e6e80;
 }
 
 .navButton {
@@ -23,11 +26,19 @@
     width: 90px;
     height: 35px;
     cursor: pointer;
-    transition: transform 0.5s ease, box-shadow 0.5s ease;
-    
+    transition: transform 0.5s ease, box-shadow 0.5s ease;    
 }
 
 .navButton:hover {
     transform: scale(1.04);
-    box-shadow: 0 0 15px rgba(3, 62, 110, 0.5);
+    box-shadow: 0 0 15px #033e6e80;
 }
+
+.saveButton {
+    background: none;
+    border: none;
+    position: absolute;
+    right: 2px;
+    top: 10px;
+}
+

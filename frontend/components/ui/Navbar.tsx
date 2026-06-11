@@ -4,13 +4,15 @@ import Link from 'next/link'
 import styles from './Navbar.module.css'
 import Image from 'next/image'
 import { useAuth } from '@/providers/AuthProvider'
+import { useState } from 'react'
 
 export default function Navbar(){
     const auth = useAuth()
+
     return (
         <div className={styles.header}>
             <div className={styles.nav}>
-                <Image src="/logo.png" alt='logo' width={50} height={50} className={styles.logo}/>
+                <Image src="/navLogo.png" alt='logo' width={50} height={50} />
                 <Link className={styles.link} href='/movies'>Список фильмов</Link>
                 <Link className={styles.link} href='/users'>Пользователи</Link>
             </div>
@@ -21,10 +23,17 @@ export default function Navbar(){
                         <Link className={styles.link} href='/registration'>Регистрация</Link>
                     </>
                 ) : (
-                    <>
-                        <Link className={styles.link} href='/profile'>Профиль</Link>
-                        <button onClick={auth.logout}>Выйти</button>
-                    </>
+                    <div className={styles.dropdown}>
+                        <div className={styles.user}> 
+                            <p className={styles.link}>{auth.user?.login}</p>
+                            <Image src='/userLogo.png' width={35} height={35} alt='user logo'/>
+                        </div>
+                        <div className={styles.dropdownContent}>
+                            <Link href='/profile' className={styles.dropdownLink}>Профиль</Link>
+                            <Link href='/settings' className={styles.dropdownLink}>Настройки</Link>
+                            <button className={styles.logout} onClick={auth.logout}>Выйти</button>
+                        </div>
+                    </div>
                 )}
             </div>
         </div>

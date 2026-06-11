@@ -20,15 +20,6 @@ export async function getUserById(id: string): Promise<User> {
 }
 
 export async function toggleSaveMovie(id: string, movieId: string, token: string): Promise<User> {
-    
-    const user = await getUserById(id);
-
-    const savedMovieIds = user.savedMovieIds ?? []
-
-    const isFavorite = savedMovieIds.includes(movieId)
-
-    const updatedMovieIds = isFavorite ? savedMovieIds.filter(id => id !== movieId) : [...savedMovieIds, movieId]
-
     const res = await fetch(`http://localhost:3001/users/${id}/favorites`, {
         method: 'PATCH',
         headers: {
@@ -36,7 +27,7 @@ export async function toggleSaveMovie(id: string, movieId: string, token: string
             'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-            savedMovieIds: updatedMovieIds
+            movieId
         })
     })
 
@@ -92,4 +83,21 @@ export async function loginUser({login, pass}: LoginDto): Promise<{token: string
     }
 
     return await res.json()
+}
+
+export async function getProfile(token: string): Promise<User> {
+    const res = await fetch(`http://localhost:3001/profile`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    })
+
+    if(!res.ok){
+        const errorData = await res.json()
+        throw new Error(errorData.message || 'Ошибка сервера')
+    }
+
+    return await res.json()
+    
 }

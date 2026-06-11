@@ -3,4 +3,5 @@ export type MovieEntity = {
     title: string;
     description: string;
     director: string;
+    imgLink: string;
 }
