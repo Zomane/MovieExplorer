@@ -58,7 +58,7 @@ export default function Login(){
                         required: 'Введите логин',
                         minLength: {
                             value: 5,
-                            message: 'Логин должен быть не менее 5 символов'
+                            message: 'Логин должен содержать не менее 5 символов'
                         }
                     })} />
 

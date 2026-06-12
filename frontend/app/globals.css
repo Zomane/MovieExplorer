@@ -29,7 +29,7 @@ body {
     "header"
     "main"
     "footer";
-  gap: 20px;
+  gap: 15px;
   margin: 0;
   grid-template-rows: auto 1fr auto;
   color: rgb(221, 221, 221);

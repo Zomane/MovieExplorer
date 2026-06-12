@@ -24,6 +24,7 @@ const MovieCard = React.memo(function MovieCard({movie, onNavigate, onSave, user
             <h3>{movie.title}</h3>
             <p className={styles.description}>Directed by: {director}</p>
             <button className={styles.navButton} onClick={() => onNavigate(movie.id)}>Смотреть</button>
+            
             <button className={styles.saveButton} onClick={() => onSave(movie.id)}>
                 <Image src={isSaved?'/saved.svg' : '/save.svg'} width={27} height={27} alt='Save button'/>
             </button>

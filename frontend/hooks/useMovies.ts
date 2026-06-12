@@ -1,5 +1,6 @@
-import { getMovieById, getMovies, getSavedMovies } from "@/api/movies";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { getMovieById, getMovies } from "@/api/movies";
+import { getSavedMovies } from "@/api/users";
+import { useQuery } from "@tanstack/react-query";
 
 export function useMovies(){
     return useQuery({

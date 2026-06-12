@@ -1,3 +1,4 @@
+import { Movie } from "@/types/movieType";
 import { LoginDto, RegisterDto, User } from "@/types/userType";
 
 
@@ -100,4 +101,56 @@ export async function getProfile(token: string): Promise<User> {
 
     return await res.json()
     
+}
+
+export async function getSavedMovies(id: string): Promise<Movie[]>{
+    const res = await fetch(`http://localhost:3001/users/${id}/savedMovies`)
+
+    if(!res.ok){
+        const errorData = await res.json()
+        throw new Error(errorData || 'Ошибка сервера')
+    }
+
+    return await res.json()
+}
+
+export async function changeUserLogin(token: string, login: string) {
+    const res = await fetch(`http://localhost:3001/profile/changeLogin`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${token}`
+        },
+        body: JSON.stringify({
+            login: login,
+        })
+    })
+
+    if(!res.ok){
+        const errrorData = await res.json()
+        throw new Error(errrorData.message || 'Ошибка сервера')
+    }
+
+    return await res.json()
+}
+
+export async function changeUserPass(token: string, currentPass: string, newPass: string) {
+    const res = await fetch('http://localhost:3001/profile/changePass', {
+        method: 'PATCH',
+        headers: {
+            'Content-Type':'application/json',
+            'Authorization':`Bearer ${token}`
+        },
+        body: JSON.stringify({
+            currentPass: currentPass,
+            newPass: newPass
+        })
+    })
+
+    if(!res.ok){
+        const errrorData = await res.json()
+        throw new Error(errrorData.message || 'Ошибка сервера')
+    }
+
+    return await res.json()
 }

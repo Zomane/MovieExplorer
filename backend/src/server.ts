@@ -198,9 +198,111 @@ app.patch('/users/:id/favorites', authMiddleware, (req: AuthRequest, res) => {
     return res.json(userWithoutPass)
 })
 
-// app.patch('/users/:id', (req, res) => {
+app.patch('/profile/changeLogin', authMiddleware, (req: AuthRequest, res) => {
+    const user = users.find(user => user.id === req.user?.id)
 
-// })
+    if(!user){
+        return res.status(404).json({
+            message: 'Пользователь не найден'
+        })
+    }
+
+    const newLogin = req.body.login
+
+    const isLoginExist = users.find(user => user.login === newLogin && user.id !== req.user?.id)
+
+    if(!newLogin){
+        return res.status(400).json({
+            message: 'Введите логин'
+        })
+    }
+
+    if(isLoginExist){
+        return res.status(400).json({
+            message: 'Этот логин уже занят'
+        })
+    }
+
+    if(newLogin === user.login){
+        return res.status(400).json({
+            message: 'Новый логин должен отличаться от старого'
+        })
+    }
+
+    if(newLogin.length < 5){
+        return res.status(400).json({
+            message: 'Логин должен быть не меньше 5 символов'
+        })
+    }
+
+    user.login = newLogin
+
+    const userWithoutPass = {
+        id: user.id,
+        login: user.login,
+        email: user.email,
+        role: user.role,
+        savedMovieIds: user.savedMovieIds
+    } 
+    
+    return res.json(userWithoutPass)
+})
+
+
+app.patch('/profile/changePass', authMiddleware, async (req: AuthRequest, res) => {
+    try {  
+        const user = users.find(user => user.id === req.user?.id)
+
+        if(!user){
+            return res.status(404).json({
+                message: 'Пользователь не найден'
+            })
+        }
+
+        const newPass = req.body.newPass
+        const currentPass = req.body.currentPass
+
+        if(!newPass || !currentPass){
+            return res.status(400).json({
+                message: 'Заполните все поля'
+            })
+        }
+
+        const isCorrectPass = await bcrypt.compare(currentPass, user.pass)
+        const isSamePassword = await bcrypt.compare(newPass, user.pass)
+
+
+        if(!isCorrectPass) {
+            return res.status(400).json({
+                message: 'Неверный текущий пароль'
+            })
+        }
+
+        if(newPass.length < 8) {
+            return res.status(400).json({
+                message: 'Пароль должен быть не меньше 8 символов'
+            })
+        }
+        
+        if(isSamePassword) {
+            return res.status(400).json({
+                message: 'Новый пароль должен отличаться от текущего'
+            })
+        }
+
+        user.pass = await bcrypt.hash(newPass, 10)
+
+        return res.status(200).json({
+            message: 'Пароль успешно изменен'
+        })
+
+    } catch {
+        return res.status(500).json({
+            message: 'Ошибка сервера'
+        })
+    }
+
+})
 
 
 // movies
@@ -253,8 +355,21 @@ app.delete('/movies/:id', (req, res) => {
     })
 })
 
-app.get('/savedMovies/:id', (req, res) => {
-    // реализация получения фильмов по savedMovieIds
+app.get('/users/:id/savedMovies', (req, res) => {
+    const user = users.find(user => user.id === req.params.id)
+    if(!user){
+        return (
+            res.status(404).json({
+                message: 'Пользователь не найден'
+            })
+        )
+    }
+
+    const savedMovies = movies.filter(movie =>
+        user.savedMovieIds.includes(movie.id)
+    )
+
+    return res.json(savedMovies)
 })
 
 

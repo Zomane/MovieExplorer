@@ -1,4 +1,4 @@
-import { getProfile, getUserById, getUsers, loginUser, registerUser, toggleSaveMovie } from "@/api/users";
+import { changeUserLogin, changeUserPass, getProfile, getUserById, getUsers, loginUser, registerUser, toggleSaveMovie } from "@/api/users";
 import { User } from "@/types/userType";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { type SaveMovieProps } from "@/types/apiType";
@@ -87,5 +87,17 @@ export function useUserProfile(token: string){
         retry: 3,
         refetchOnWindowFocus: false,
         enabled: !!token    
+    })
+}
+
+export function useChangeLogin(token: string){
+    return useMutation({
+        mutationFn: ({login}: {login: string}) => changeUserLogin(token, login)
+    })
+}
+
+export function useChangePass(token: string){
+    return useMutation({
+        mutationFn: ({currentPass, newPass}: {currentPass: string, newPass: string}) => changeUserPass(token, currentPass, newPass)
     })
 }
