@@ -278,9 +278,15 @@ app.patch('/profile/changePass', authMiddleware, async (req: AuthRequest, res) =
             })
         }
 
-        if(newPass.length < 8) {
+        if(newPass.length < 8 || currentPass.length < 8) {
             return res.status(400).json({
-                message: 'Пароль должен быть не меньше 8 символов'
+                message: 'Пароль должен содержать не менее 8 символов'
+            })
+        }
+
+        if(/^[A-Za-z]+$/.test(newPass) || /^\d+$/.test(newPass)) {
+            return res.status(400).json({
+                message: 'Новый пароль должен содержать как минимум 1 букву и 1 цифру'
             })
         }
         
@@ -304,8 +310,26 @@ app.patch('/profile/changePass', authMiddleware, async (req: AuthRequest, res) =
 
 })
 
+app.delete('/profile/delete', authMiddleware, (req: AuthRequest, res) => {
+    const user = users.find(user => user.id === req.user?.id)
+
+    if(!user){
+        return res.status(404).json({
+            message: 'Пользователь не найден'
+        })
+    }
+
+    const deletedUserId = users.findIndex(user => user.id === req.user?.id)
+    users.splice(deletedUserId, 1)
+
+    return res.status(200).json({
+        message: 'Аккаунт пользователя успешно удален'
+    })
+})
+
 
 // movies
+
 
 app.get('/movies', (req, res) => {
     res.json(movies)

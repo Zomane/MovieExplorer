@@ -114,7 +114,7 @@ export async function getSavedMovies(id: string): Promise<Movie[]>{
     return await res.json()
 }
 
-export async function changeUserLogin(token: string, login: string) {
+export async function changeUserLogin(token: string, login: string): Promise<User> {
     const res = await fetch(`http://localhost:3001/profile/changeLogin`, {
         method: 'PATCH',
         headers: {
@@ -134,7 +134,7 @@ export async function changeUserLogin(token: string, login: string) {
     return await res.json()
 }
 
-export async function changeUserPass(token: string, currentPass: string, newPass: string) {
+export async function changeUserPass(token: string, currentPass: string, newPass: string): Promise<{message: string}> {
     const res = await fetch('http://localhost:3001/profile/changePass', {
         method: 'PATCH',
         headers: {
@@ -150,6 +150,22 @@ export async function changeUserPass(token: string, currentPass: string, newPass
     if(!res.ok){
         const errrorData = await res.json()
         throw new Error(errrorData.message || 'Ошибка сервера')
+    }
+
+    return await res.json()
+}
+
+export async function deleteUser(token: string): Promise<{message: string}> {
+    const res = await fetch('http://localhost:3001/profile/delete', {
+        method: 'DELETE',
+        headers: {
+            'Authorization':`Bearer ${token}`
+        }
+    })
+
+    if(!res.ok) {
+        const errorData = await res.json()
+        throw new Error(errorData.message || 'Ошибка сервера')
     }
 
     return await res.json()

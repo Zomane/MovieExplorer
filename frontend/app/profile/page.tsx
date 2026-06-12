@@ -91,7 +91,7 @@ export default function ProfilePage() {
         ))}
         
         {!isPending && !isMovieError && movies.length === 0 && (
-          <p className={`${styles.errorText} ${!isVisible?styles.hidden:''}`}>У вас пока нет сохранённых фильмов</p>
+          <p className={`${styles.errorText}`}>У вас пока нет сохранённых фильмов</p>
         )}
       </div>
 

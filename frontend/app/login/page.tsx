@@ -18,7 +18,7 @@ export default function Login(){
 
     const formError = errors.login?.message || errors.pass?.message
 
-    const onLogin: SubmitHandler<LoginDto> = async (formData) => {
+    const onLogin: SubmitHandler<LoginDto> = (formData) => {
         setError(null)
         loginMutation.mutate(formData, {
             onError: (error) => {

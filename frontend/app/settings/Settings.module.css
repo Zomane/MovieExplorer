@@ -1,0 +1,20 @@
+.errorText {
+    margin: 0;
+    color: #f87171;
+    opacity: 1;
+    text-align: center;
+    transition: opacity 0.5s ease;
+}
+
+.successText {
+    margin: 0;
+    color: #71ff6c;
+    opacity: 1;
+    text-align: center;
+    transition: opacity 0.5s ease;
+}
+
+.hidden {
+    opacity: 0;
+}
+

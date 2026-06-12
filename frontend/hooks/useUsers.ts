@@ -1,4 +1,4 @@
-import { changeUserLogin, changeUserPass, getProfile, getUserById, getUsers, loginUser, registerUser, toggleSaveMovie } from "@/api/users";
+import { changeUserLogin, changeUserPass, deleteUser, getProfile, getUserById, getUsers, loginUser, registerUser, toggleSaveMovie } from "@/api/users";
 import { User } from "@/types/userType";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { type SaveMovieProps } from "@/types/apiType";
@@ -99,5 +99,11 @@ export function useChangeLogin(token: string){
 export function useChangePass(token: string){
     return useMutation({
         mutationFn: ({currentPass, newPass}: {currentPass: string, newPass: string}) => changeUserPass(token, currentPass, newPass)
+    })
+}
+
+export function useDeleteUser(token: string){
+    return useMutation({
+        mutationFn: () => deleteUser(token)
     })
 }
