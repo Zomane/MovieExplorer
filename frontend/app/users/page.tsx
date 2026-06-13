@@ -4,10 +4,10 @@ import UserCard from "@/components/users/UserCard";
 import { useUsers } from "@/hooks/useUsers";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import styles from './Users.module.css'
 
 export default function UsersPage(){
     const {data: users, isLoading, error, isError} = useUsers()
-    console.log(users)
     const router = useRouter()
     const searchParams = useSearchParams()
     const q = searchParams.get('q') ?? ''
@@ -29,13 +29,14 @@ export default function UsersPage(){
                 params.delete('q')
             }
 
-            router.replace(`/users?${params.toString()}`)
+            const queryString = params.toString()
+            router.replace(queryString ? `/users?${queryString}` : '/users')
         }, 500)
 
         return () => clearTimeout(timer)
     }, [search, router, searchParams, q])
 
-    const filtredUsers = useMemo(() => (users??[]).filter(user => user.login.toLowerCase().includes(q.toLowerCase())), [users, q])
+    const filteredUsers = useMemo(() => (users??[]).filter(user => user.login.toLowerCase().includes(q.toLowerCase())), [users, q])
     
     const handleNav = useCallback(
         (id: string) => router.push(`/users/${id}`),
@@ -43,14 +44,14 @@ export default function UsersPage(){
     )
 
     return (
-        <div>
+        <div className={styles.usersPage}>
             <h1>Список пользователей</h1>
-            <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Введите логин" />
+            <input className={styles.search} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Введите логин" />
             {isLoading && <h3>Загрузка...</h3>}
-            {!isLoading && isError && <h3>{error.message}</h3>}
-            {!isLoading && !isError && filtredUsers.length === 0 && <h3>Пользователь не найден</h3>}
-            <div>
-                {filtredUsers.map(user => 
+            {!isLoading && isError && <h3 className={styles.errorText}>{error.message}</h3>}
+            {!isLoading && !isError && filteredUsers.length === 0 && <h3>Пользователь не найден</h3>}
+            <div className={styles.usersGrid}>
+                {filteredUsers.map(user => 
                         <UserCard key={user.id} user={user} onNavigate={handleNav}/>
                     )
                 }

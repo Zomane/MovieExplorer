@@ -40,7 +40,6 @@ export default function Login(){
         }, 2000)
         const removeTimer = setTimeout(()=>{
             setError(null)
-            setIsVisible(true)
         }, 2500)
 
         return () => {

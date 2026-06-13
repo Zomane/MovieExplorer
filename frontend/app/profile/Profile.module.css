@@ -1,41 +1,133 @@
 .profilePage {
+    min-height: 100%;
+    padding: 20px 20px;
+
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 28px;
+
+    color: #e2e8f0;
 }
 
-.userInfo {
+.profilePage h1 {
+    font-size: 38px;
+}
+
+.profileCard {
+    width: min(100%, 520px);
+    padding: 28px;
+
+    background: #080d17;
+    border: 1px solid #30363d;
+    border-radius: 22px;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+    position: relative;
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.logoImage {
+    border-radius: 50%;
+    border: 2px solid #334155;
+    box-shadow: 0 0 24px rgba(37, 99, 235, 0.18);
+}
+
+.profileInfo {
     text-align: center;
-    gap: 5px;
+}
+
+.profileInfo h2 {
+    margin: 0;
+    font-size: 26px;
+    color: #f8fafc;
+}
+
+.profileInfo p {
+    margin: 6px 0 0;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+.profileStats {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.statItem {
+    padding: 12px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.statItem span {
+    display: block;
+    color: #94a3b8;
+    font-size: 13px;
+    margin-bottom: 4px;
+}
+
+.statItem strong {
+    color: #f8fafc;
+    font-size: 16px;
+}
+
+.settingsBtn {
+    position: absolute;
+    color: white;
+    right: 20px;
+    top: 20px;
+    border-radius: 12px;
+    transition: transform 0.2s ease;
+}
+
+.settingsBtn:hover {
+    transform: translateY(-2px);
+}
+
+.sectionHeader {
+    text-align: center;
+}
+
+.sectionHeader h1 {
+    margin: 0;
+    font-size: 32px;
+    color: #f8fafc;
+}
+
+.sectionHeader p {
+    margin: 8px 0 0;
+    color: #94a3b8;
+    font-size: 15px;
 }
 
 .savedFilms {
     display: grid;
-
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(280px, 280px)
-    );
-
+    grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
     justify-content: center;
-    align-items: center;
-
-    width: 100%;
     gap: 30px;
+    width: 100%;
 }
 
 .errorText {
     margin: 0;
-    color: white;
+    color: #f87171;
     opacity: 1;
     text-align: center;
     transition: opacity 0.5s ease;
+}
+
+.emptyText {
+    margin: 0;
+    color: #94a3b8;
+    text-align: center;
 }
 
 .hidden {

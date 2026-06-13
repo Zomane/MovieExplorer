@@ -4,10 +4,16 @@ import Link from 'next/link'
 import styles from './Navbar.module.css'
 import Image from 'next/image'
 import { useAuth } from '@/providers/AuthProvider'
-import { useState } from 'react'
+import { useRouter } from 'next/navigation'
+
 
 export default function Navbar(){
     const auth = useAuth()
+    const router = useRouter()
+    function handleExit(){
+        auth.logout()
+        router.replace('/login')
+    }
 
     return (
         <div className={styles.header}>
@@ -31,7 +37,7 @@ export default function Navbar(){
                         <div className={styles.dropdownContent}>
                             <Link href='/profile' className={styles.dropdownLink}>Профиль</Link>
                             <Link href='/settings' className={styles.dropdownLink}>Настройки</Link>
-                            <button className={styles.logout} onClick={auth.logout}>Выйти</button>
+                            <button className={styles.logout} onClick={handleExit}>Выйти</button>
                         </div>
                     </div>
                 )}

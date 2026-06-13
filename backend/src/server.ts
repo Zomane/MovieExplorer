@@ -40,9 +40,50 @@ const users: UserEntity[] = [
         login:"stsipa1",
         email:"tsybulkin.step@mail.ru",
         role:"user",
+        pass:"$2b$10$wLo7kFr3zaljCx2vOZ.Kj.yfRQBFjphgE.o9t8mVaDvqeNQmWcLWa",
+        savedMovieIds:['3', '2']
+    },
+    {
+        id:"178765275492",
+        login:"user3",
+        email:"user3@mail.ru",
+        role:"user",
         pass:"$2b$10$iodiR5STz3xkHEHieWkZFeNj3H5tsw2sEgzkTcyNdm0wSuZF3a7ki",
         savedMovieIds:[]
+    },
+    {
+        id:"165454275492",
+        login:"user4",
+        email:"user4@mail.ru",
+        role:"user",
+        pass:"$2b$10$iodiR5STz3xkHEHieWkZFeNj3H5tsw2sEgzkTcyNdm0wSuZF3a7ki",
+        savedMovieIds:[]
+    },
+    {
+        id:"178321275492",
+        login:"user5",
+        email:"user5@mail.ru",
+        role:"user",
+        pass:"$2b$10$iodiR5STz3xkHEHieWkZFeNj3H5tsw2sEgzkTcyNdm0wSuZF3a7ki",
+        savedMovieIds:['1', '4']
+    },
+    {
+        id:"1781024243292",
+        login:"user6",
+        email:"user6@mail.ru",
+        role:"user",
+        pass:"$2b$10$iodiR5STz3xkHEHieWkZFeNj3H5tsw2sEgzkTcyNdm0wSuZF3a7ki",
+        savedMovieIds:['3','1']
+    },
+    {
+        id:"1781023143292",
+        login:"user7",
+        email:"user7@mail.ru",
+        role:"user",
+        pass:"$2b$10$iodiR5STz3xkHEHieWkZFeNj3H5tsw2sEgzkTcyNdm0wSuZF3a7ki",
+        savedMovieIds:['1', '2']
     }
+
 ]
 
 const movies: MovieEntity[] = [

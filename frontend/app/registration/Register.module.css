@@ -2,13 +2,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px 16px;
+    padding-top: 20px;
 }
 
 .registerTitle {
     color: #e2e8f0;
     margin-bottom: 8px;
-    font-size: 32px;
+    font-size: 38px;
 }
 
 .registerForm {
@@ -16,11 +16,12 @@
     flex-direction: column;
     align-items: center;
     gap: 16px;
-    width: min(100%, 420px);
+    width: min(100%, 550px);
     padding: 36px 32px;
     border: 1px solid #30363d;
     border-radius: 18px;
-    box-shadow: 0 0 24px rgba(10, 61, 179, 0.3);
+    box-shadow: 0 0 24px rgba(4, 23, 66, 0.3);
+    background-color: #080d17;
 }
 
 .input {
@@ -33,19 +34,28 @@
     border: 1px solid #30363d;
     border-radius: 12px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: #0f172a
 }
 
 .input:focus {
     outline: none;
     box-shadow: 0 0 0 3px rgba(68, 54, 146, 0.16);
 }
+
+.formInput::placeholder {
+    color: #64748b;
+}
+
+
 .registerBtn {
     width: 100%;
     max-width: 220px;
     padding: 12px 16px;
     font-size: 16px;
-    background-color:#1c2a3a;
-    color: #dddddd;
+    background-color:#19324e;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
     border: 1px solid #30363d;
     border-radius: 12px;
     cursor: pointer;

@@ -107,7 +107,7 @@ export default function MoviesPage() {
 
             {isLoading && <h3>Загрузка...</h3>}
             {!isLoading && isMovieError && <h3>{moviesError.message}</h3>}
-            {!isLoading && !isMovieError && filteredMovies.length === 0 && <p>{'Такого фильма не существует :('}</p>}
+            {!isLoading && !isMovieError && filteredMovies.length === 0 && <p>Фильм не найден</p>}
        
             <div className={styles.cardList}>
                 {filteredMovies.map(movie => (
