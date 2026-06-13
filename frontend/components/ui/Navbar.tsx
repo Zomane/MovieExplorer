@@ -18,7 +18,9 @@ export default function Navbar(){
     return (
         <div className={styles.header}>
             <div className={styles.nav}>
-                <Image src="/navLogo.png" alt='logo' width={50} height={50} />
+                <Link className={styles.link} href='/'>
+                    <Image src="/navLogo.png" alt='logo' width={50} height={50} />
+                </Link>
                 <Link className={styles.link} href='/movies'>Список фильмов</Link>
                 <Link className={styles.link} href='/users'>Пользователи</Link>
             </div>
