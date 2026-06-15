@@ -1,0 +1,189 @@
+.moviePage {
+    width: 100%;
+    min-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    padding: 0px 20px;
+    gap: 18px;
+}
+
+.movieCard {
+    width: 100%;
+    max-width: 980px;
+
+    display: flex;
+    gap: 32px;
+
+    padding: 24px;
+
+    background-color: #0c0c0c;
+    border: 1px solid #30363d;
+    border-radius: 18px;
+
+    box-shadow: 0 0 18px #033e6e80;
+}
+
+.image {
+    border-radius: 14px;
+    border: 1px solid #30363d;
+
+    object-fit: cover;
+    flex-shrink: 0;
+
+}
+
+.movieInfo {
+    max-width: 600px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 14px;
+}
+
+.movieInfo h1 {
+    margin: 0;
+
+    color: #e2e8f0;
+    font-size: 42px;
+    line-height: 1.1;
+}
+
+
+
+.meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    color: #94a3b8;
+    font-size: 15px;
+}
+
+.meta span {
+    padding: 5px 9px;
+
+    background-color: #111827;
+    border: 1px solid #30363d;
+    border-radius: 999px;
+}
+
+.director {
+    margin: 0;
+
+    color: #cbd5e1;
+    font-size: 17px;
+}
+
+.description {
+    margin: 0;
+
+    color: #94a3b8;
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+
+
+.btnsContainer {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+
+    margin-top: 10px;
+}
+
+.saveBtn,
+.backBtn {
+    padding: 10px 16px;
+
+    border-radius: 10px;
+    border: 1px solid #30363d;
+
+    color: #dddddd;
+    cursor: pointer;
+    background-color: #1c2a3a;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.saveBtn:not(:disabled):hover,
+.backBtn:hover {
+    transform: translateY(-2px);
+    border-color: #1f6feb;
+    box-shadow: 0 0 15px #033e6e80;
+}
+
+.saveBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+
+.errorText {
+    margin: 0;
+
+    color: #f87171;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+
+
+@media (max-width: 800px) {
+    .movieCard {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .movieInfo {
+        align-items: center;
+    }
+
+    .meta {
+        justify-content: center;
+    }
+
+    .btnsContainer {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .moviePage {
+        padding: 0px 14px;
+    }
+
+    .movieCard {
+        padding: 18px;
+    }
+
+    .movieInfo h1 {
+        font-size: 32px;
+    }
+
+    .image {
+        width: 240px;
+        height: 360px;
+    }
+
+    .saveBtn,
+    .backBtn {
+        width: 100%;
+    }
+
+    .btnsContainer {
+        width: 100%;
+    }
+}

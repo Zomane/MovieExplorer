@@ -38,6 +38,7 @@ export default function ProfilePage() {
         }, {
             onError: (error) => {
                 setError(error.message)
+                setIsVisible(true)
             }
         }  
       )
@@ -63,11 +64,16 @@ export default function ProfilePage() {
   
   const handleNav = useCallback(
       (id: string) => {
-          router.replace(`/movies/${id}`)
+          router.push(`/movies/${id}`)
       },[router]
   )
-  if (!token) {
-    return <h1>Необходимо войти в аккаунт</h1>
+
+  if(!auth.token || !auth.user) {
+    return (
+      <div className={styles.tokenError}>
+          <h1>Необходимо войти в аккаунт</h1>
+      </div>
+    )
   }
 
   return (
@@ -113,7 +119,7 @@ export default function ProfilePage() {
           <MovieCard key={movie.id} movie={movie} onNavigate={handleNav} onSave={handleSave} user={auth.user}/>
         ))}
         
-        {!isPending && !isMovieError && movies.length === 0 && (
+        {!isPending && !isMovieError && (movies?.length ?? 0) === 0 && (
           <p className={`${styles.emptyText}`}>У вас пока нет сохранённых фильмов</p>
         )}
       </div>

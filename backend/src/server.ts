@@ -89,31 +89,43 @@ const users: UserEntity[] = [
 const movies: MovieEntity[] = [
     {
         id: '1',
-        title: 'Batman',
-        description: 'Good movie about rich strong guy by DC',
-        director: 'Christopher Nolan',
-        imgLink: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1704946/be4b776a-5ab6-42b4-9147-5c3ec6b53c44/600x900'
+        title: 'Бэтмен: Начало',
+        description: 'После гибели родителей Брюс Уэйн проходит путь от потерянного наследника до защитника Готэма, чтобы сразиться с преступностью и собственными страхами.',
+        director: 'Кристофер Нолан',
+        imgLink: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1704946/be4b776a-5ab6-42b4-9147-5c3ec6b53c44/600x900',
+        genre: 'боевик, криминал, драма',
+        year: 2005,
+        rating: 8.2
     },
     {
         id: '2',
-        title: 'Spider-Man',
-        description: 'Good superheroic movie by Marvel',
-        director: 'Sam Raimi',
-        imgLink: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1946459/428e2842-4157-45e8-a9af-1e5245e52c37/300x450'
-    }, 
+        title: 'Человек-паук',
+        description: 'Скромный школьник Питер Паркер получает сверхспособности после укуса генетически изменённого паука и учится быть героем.',
+        director: 'Сэм Рэйми',
+        imgLink: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1946459/428e2842-4157-45e8-a9af-1e5245e52c37/300x450',
+        genre: 'боевик, фантастика, приключения',
+        year: 2002,
+        rating: 7.4
+    },
     {
         id: '3',
-        title: 'Breaking Bad',
-        description: 'The best series about drugs in the world',
-        director: 'Bryan Cranston',
-        imgLink: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1900788/fb35416f-3b0d-4b96-bc65-cf6923f9e329/300x450'
+        title: 'Во все тяжкие',
+        description: 'Учитель химии Уолтер Уайт после тяжёлого диагноза начинает производить метамфетамин, постепенно превращаясь в одного из самых опасных людей криминального мира.',
+        director: 'Винс Гиллиган',
+        imgLink: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1900788/fb35416f-3b0d-4b96-bc65-cf6923f9e329/300x450',
+        genre: 'криминал, драма, триллер',
+        year: 2008,
+        rating: 9.5
     },
     {
         id: '4',
-        title: 'Shutter Island',
-        description: 'An exciting film about a detective leading an investigation on an island',
-        director: 'Martin Scorsese',
-        imgLink: 'https://avatars.mds.yandex.net/get-ott/224348/2a00000198528f853134273ea785844e1c8a/600x900'
+        title: 'Остров проклятых',
+        description: 'Федеральный маршал прибывает в психиатрическую клинику на изолированном острове, чтобы расследовать исчезновение пациентки, но вскоре начинает сомневаться в реальности происходящего.',
+        director: 'Мартин Скорсезе',
+        imgLink: 'https://avatars.mds.yandex.net/get-ott/224348/2a00000198528f853134273ea785844e1c8a/600x900',
+        genre: 'детектив, триллер, драма',
+        year: 2010,
+        rating: 8.2
     }
 ]
 
@@ -386,38 +398,6 @@ app.get('/movies/:id', (req, res) => {
     }
 
     res.json(movie)
-})
-
-app.post('/movies', (req, res) => {
-    const newMovie = {
-        id: Date.now().toString(),
-        title: req.body.title,
-        description: req.body.description,
-        director: req.body.director,
-        imgLink: req.body.imgLink
-    }
-
-    movies.push(newMovie)
-
-    res.status(201).json(newMovie)
-})
-
-app.delete('/movies/:id', (req, res) => {
-    const index = movies.findIndex(
-        movie => movie.id === req.params.id
-    )
-
-    if(index === -1){
-        return res.status(404).json({
-            message: 'Фильм не найден'
-        })
-    }
-
-    movies.splice(index, 1)
-
-    res.status(200).json({
-        message: 'Удалено'
-    })
 })
 
 app.get('/users/:id/savedMovies', (req, res) => {

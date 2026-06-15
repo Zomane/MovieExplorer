@@ -123,6 +123,13 @@ export default function SettingsPage(){
         }
     }, [passMessage])
 
+    if(!auth.token || !auth.user) {
+        return (
+            <div className={styles.tokenError}>
+                <h1>Необходимо войти в аккаунт</h1>
+            </div>
+        )
+    }
 
     return (
     <div className={styles.settingsPage}>

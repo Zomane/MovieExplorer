@@ -6,8 +6,10 @@ import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { type RegisterDto } from "@/types/userType";
 import styles from './Register.module.css'
+import { useAuth } from "@/providers/AuthProvider";
 
 export default function Registration() {
+    const auth = useAuth()
 
     const registerMutation = useRegisterUser()
     const {register, handleSubmit, formState:{errors}, reset} = useForm<RegisterDto>()
@@ -41,6 +43,12 @@ export default function Registration() {
 
         return () => clearTimeout(timer)
     }, [error])
+
+    useEffect(() => {
+        if (auth.token) {
+            router.replace('/profile')
+        }
+    }, [auth.token, router])
 
     return (
         <div className={styles.registerPage}>

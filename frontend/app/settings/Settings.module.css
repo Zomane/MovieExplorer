@@ -333,7 +333,12 @@
     box-shadow: 0 10px 24px rgba(239, 68, 68, 0.25);
 }
 
-
+.tokenError {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+} 
 
 @keyframes overlayFadeIn {
     from {

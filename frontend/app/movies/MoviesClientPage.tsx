@@ -1,6 +1,6 @@
 'use client'
 
-import styles from './Movies.module.css'
+import styles from './MoviesList.module.css'
 import MovieCard from "@/components/movies/MovieCard"
 import { useMovies } from "@/hooks/useMovies"
 import { useCallback, useEffect, useMemo, useState } from "react"
@@ -18,6 +18,7 @@ export default function MoviesPage() {
     const token = auth.token ?? ''
 
     const { data: movies, isLoading, error: moviesError, isError: isMovieError } = useMovies()
+    const toggleMovieMutation = useToggleSaveMovie({token, updateUser: auth.updateUser, user: auth.user})
     const router = useRouter()
 
     const searchParams = useSearchParams()
@@ -56,8 +57,6 @@ export default function MoviesPage() {
             router.push(`/movies/${id}`)
         },[router]
     )
-
-    const toggleMovieMutation = useToggleSaveMovie({token, updateUser: auth.updateUser, user: auth.user})
 
     const handleSave = useCallback(
         (movieId: string) => {

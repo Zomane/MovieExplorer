@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getMovieById } from '@/api/movies'
+import MovieClientPage from './MovieClientPage'
+
 
 type Props = {
-    params: Promise<{
-        id: string
-    }>
+    params: Promise<{id: string }>
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -36,9 +36,6 @@ export default async function MoviePage({ params }: Props) {
     }
 
     return (
-        <div>
-            <h1>{movie.title}</h1>
-            <p>{movie.description}</p>
-        </div>
+        <MovieClientPage movie={movie}/>
     )
 }

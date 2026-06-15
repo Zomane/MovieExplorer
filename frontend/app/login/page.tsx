@@ -12,7 +12,7 @@ export default function Login(){
     const router = useRouter()
     const loginMutation = useLoginUser()
     const {register, handleSubmit, formState: {errors}, reset } = useForm<LoginDto>()
-    
+
     const [error, setError] = useState<string | null>(null);
     const [isVisible, setIsVisible] = useState(false) 
 
@@ -47,6 +47,12 @@ export default function Login(){
             clearTimeout(removeTimer)
         } 
     }, [error])
+
+    useEffect(() => {
+        if (auth.token) {
+            router.replace('/profile')
+        }
+    }, [auth.token, router])
 
     return (
         <div >
