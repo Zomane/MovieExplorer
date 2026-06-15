@@ -8,8 +8,12 @@ export async function getMovies(): Promise<Movie[]> {
     return await res.json()
 }
 
-export async function getMovieById(id: string): Promise<Movie> {
+export async function getMovieById(id: string): Promise<Movie | null> {
     const res = await fetch(`http://localhost:3001/movies/${id}`)
+
+    if (res.status === 404) {
+        return null
+    }
 
     if(!res.ok){
         throw new Error('Не удалось получить фильм')

@@ -1,16 +1,14 @@
 'use client'
 
+import ErrorView from "@/components/error/ErrorView"
+
 type Props = {
-    error: Error,
+    error: Error & { digest?: string }
     reset: () => void
 }
 
-export default function ErrorPage({error, reset}: Props) {
+export default function ErrorPage({ error, reset }: Props) {
     return (
-
-        <div>
-            <h1>{error.message}</h1>
-            <button onClick={reset}>Попробовать снова</button>
-        </div>
+        <ErrorView error={error} reset={reset} />
     )
 }

@@ -49,7 +49,7 @@ export default function UsersPage(){
             <input className={styles.search} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Введите логин" />
             {isLoading && <h3>Загрузка...</h3>}
             {!isLoading && isError && <h3 className={styles.errorText}>{error.message}</h3>}
-            {!isLoading && !isError && filteredUsers.length === 0 && <h3>Пользователь не найден</h3>}
+            {!isLoading && !isError && filteredUsers.length === 0 && <h3>Пользователей не найдено</h3>}
             <div className={styles.usersGrid}>
                 {filteredUsers.map(user => 
                         <UserCard key={user.id} user={user} onNavigate={handleNav}/>

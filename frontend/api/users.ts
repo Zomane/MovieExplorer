@@ -12,10 +12,14 @@ export async function getUsers(): Promise<User[]> {
     return data
 }
 
-export async function getUserById(id: string): Promise<User> {
+export async function getUserById(id: string): Promise<User | null> {
     const res = await fetch(`http://localhost:3001/users/${id}`)
+    if (res.status === 404) {
+        return null
+    }
     if(!res.ok){
-        throw new Error('Ошибка в загрузке пользователей')
+        const error = await res.json()
+        throw new Error(error.message || 'Ошибка в загрузке пользователей')
     }
     return await res.json()
 }

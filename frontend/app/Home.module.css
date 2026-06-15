@@ -1,0 +1,210 @@
+.homePage {
+    --text: #e2e8f0;
+    --border-gray: #30363d;
+    --border-blue: #1f6feb;
+    --dark-blue: #033e6e80;
+    width: 100%;
+    min-height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 70px 24px;
+    gap: 64px;
+
+    color: var(--text);
+}
+
+.hero {
+    width: 100%;
+    max-width: 850px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+    gap: 20px;
+}
+
+.hero h1 {
+    margin: 0;
+
+    font-size: clamp(56px, 9vw, 110px);
+    line-height: 1;
+    letter-spacing: -4px;
+
+    color: var(--border-blue);
+    text-shadow: 0 0 28px #033e6e99;
+}
+
+.hero h2 {
+    margin: 0;
+
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.15;
+
+    color: var(--text);
+}
+
+.description {
+    margin: 0;
+
+    max-width: 680px;
+
+    color: #94a3b8;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+
+    margin-top: 10px;
+}
+
+.primaryButton,
+.secondaryButton {
+    padding: 12px 18px;
+
+    border-radius: 12px;
+    border: 1px solid var(--border-gray);
+
+    text-decoration: none;
+    color: #dddddd;
+
+    background-color: #111827;
+
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.primaryButton:hover,
+.secondaryButton:hover {
+    transform: translateY(-2px);
+    border-color: var(--border-blue);
+    box-shadow: 0 0 16px var(--dark-blue);
+}
+
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible {
+    outline: 2px solid var(--border-blue);
+    outline-offset: 3px;
+}
+
+.features {
+    width: 100%;
+    max-width: 1100px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.featureCard {
+    position: relative;
+    overflow: hidden;
+
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    background-color: #0c0c0c;
+    border: 1px solid var(--border-gray);
+    border-radius: 18px;
+
+    box-shadow: 0 0 14px var(--dark-blue);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.featureCard::before {
+    content: '';
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 1px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--border-blue),
+        transparent
+    );
+
+    opacity: 0.7;
+}
+
+.featureCard:hover {
+    transform: translateY(-4px);
+    border-color: var(--border-blue);
+    box-shadow: 0 0 20px var(--dark-blue);
+}
+
+.featureIcon {
+    width: 42px;
+    height: 42px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 12px;
+    background-color: #111827;
+    border: 1px solid var(--border-gray);
+
+    font-size: 22px;
+}
+
+.featureCard h3 {
+    margin: 0;
+
+    color: var(--text);
+    font-size: 22px;
+}
+
+.featureCard p {
+    margin: 0;
+
+    color: #94a3b8;
+    line-height: 1.5;
+}
+
+@media (max-width: 850px) {
+    .features {
+        grid-template-columns: 1fr;
+        max-width: 520px;
+    }
+}
+
+@media (max-width: 480px) {
+    .homePage {
+        padding: 50px 16px;
+        gap: 48px;
+    }
+
+    .hero h1 {
+        letter-spacing: -2px;
+    }
+
+    .description {
+        font-size: 17px;
+    }
+
+    .primaryButton,
+    .secondaryButton {
+        width: 100%;
+        text-align: center;
+    }
+
+    .actions {
+        width: 100%;
+    }
+}
