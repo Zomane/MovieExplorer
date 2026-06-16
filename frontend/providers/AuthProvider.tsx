@@ -1,5 +1,5 @@
 import { User } from "@/types/userType";
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 type AuthContextType = {
     user: User | null,
@@ -20,6 +20,7 @@ export function AuthProvider({children}: {children: React.ReactNode}){
         const rawToken = localStorage.getItem('token')
 
         if (rawUser) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setUser(JSON.parse(rawUser))
         }
 
@@ -56,6 +57,6 @@ export function AuthProvider({children}: {children: React.ReactNode}){
 
 export function useAuth() {
     const auth = useContext(AuthContext)
-    if(!auth){throw new Error('Context вызван все Auth')}
+    if(!auth){throw new Error('Context вызван вне Auth')}
     return auth
 }

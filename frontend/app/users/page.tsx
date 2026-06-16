@@ -5,6 +5,7 @@ import { useUsers } from "@/hooks/useUsers";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import styles from './Users.module.css'
+import { useAuth } from "@/providers/AuthProvider";
 
 export default function UsersPage(){
     const {data: users, isLoading, error, isError} = useUsers()
@@ -12,31 +13,30 @@ export default function UsersPage(){
     const searchParams = useSearchParams()
     const q = searchParams.get('q') ?? ''
     const [search, setSearch] = useState(q)
-
-    useEffect(() => {
-        setSearch(q)
-    }, [q])
+    const auth = useAuth()
+    const userId = auth.user?.id ?? ''
 
     useEffect(()=>{
-        if(search === q) return 
-
-        const params = new URLSearchParams(searchParams.toString())
+        if(search.trim() === q.trim()) return 
 
         const timer = setTimeout(()=>{
+            const params = new URLSearchParams(searchParams.toString())
+
             if(search.trim()){
-                params.set('q', search)
+                params.set('q', search.trim())
             } else {
                 params.delete('q')
             }
 
             const queryString = params.toString()
+
             router.replace(queryString ? `/users?${queryString}` : '/users')
         }, 500)
 
         return () => clearTimeout(timer)
     }, [search, router, searchParams, q])
 
-    const filteredUsers = useMemo(() => (users??[]).filter(user => user.login.toLowerCase().includes(q.toLowerCase())), [users, q])
+    const filteredUsers = useMemo(() => (users??[]).filter(user => user.id!==userId && user.login.toLowerCase().includes(q.trim().toLowerCase())), [users, q, userId])
     
     const handleNav = useCallback(
         (id: string) => router.push(`/users/${id}`),

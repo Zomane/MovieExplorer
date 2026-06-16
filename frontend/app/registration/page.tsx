@@ -37,11 +37,17 @@ export default function Registration() {
 
     useEffect(() => {
         if(!error) return
-        const timer = setTimeout(()=>{
+        const hideTimer = setTimeout(() => {
+            setIsVisible(false)
+        }, 2000)
+        const removeTimer = setTimeout(()=>{
             setError(null)
         }, 2500)
 
-        return () => clearTimeout(timer)
+        return () => {
+            clearTimeout(hideTimer)
+            clearTimeout(removeTimer)
+        } 
     }, [error])
 
     useEffect(() => {
@@ -83,7 +89,7 @@ export default function Registration() {
 
                 <button type='submit' className={`${styles.registerBtn} `} disabled={registerMutation.isPending}>{registerMutation.isPending?'Регистрация...':'Зарегистрироваться'}</button>
 
-                {!registerMutation.isPending && error && <p className={styles.errorText}>{error}</p>}
+                {!registerMutation.isPending && error && <p className={`${styles.errorText} ${!isVisible?styles.hidden:''}`}>{error}</p>}
             </form>
         </div>
     )

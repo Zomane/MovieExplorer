@@ -1,4 +1,4 @@
-.profilePage {
+.userPage {
     min-height: 100%;
     padding: 20px 20px;
 
@@ -10,11 +10,11 @@
     color: #e2e8f0;
 }
 
-.profilePage h1 {
+.userPage h1 {
     font-size: 30px;
 }
 
-.profileCard {
+.userCard {
     width: min(100%, 520px);
     padding: 28px;
 
@@ -79,22 +79,7 @@
     font-size: 16px;
 }
 
-.settingsBtn {
-    position: absolute;
-    color: white;
-    right: 20px;
-    top: 20px;
-    border-radius: 12px;
-    transition: transform 0.2s ease;
-}
-
-.settingsBtn:hover {
-    transform: translateY(-2px);
-}
-
-
-
-.savedFilms {
+.savedMovies {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
     justify-content: center;
@@ -110,19 +95,6 @@
     transition: opacity 0.5s ease;
 }
 
-.emptyText {
-    margin: 0;
-    color: #94a3b8;
-    text-align: center;
-}
-
 .hidden {
     opacity: 0;
 }
-
-.tokenError {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-} 

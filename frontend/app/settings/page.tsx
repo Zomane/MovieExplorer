@@ -19,11 +19,6 @@ type ChangeLoginForm = {
 export default function SettingsPage(){
     const auth = useAuth()
     const router = useRouter()
-
-    if(!auth) {
-        return <h1>Необходимо войти в аккаунт</h1>
-    }
-
     const [loginMessage, setLoginMessage] = useState('')
     const [passMessage, setPassMessage] = useState('')
 

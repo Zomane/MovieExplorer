@@ -99,7 +99,7 @@ const movies: MovieEntity[] = [
     },
     {
         id: '2',
-        title: 'Человек-паук',
+        title: 'Человек паук',
         description: 'Скромный школьник Питер Паркер получает сверхспособности после укуса генетически изменённого паука и учится быть героем.',
         director: 'Сэм Рэйми',
         imgLink: 'https://avatars.mds.yandex.net/get-kinopoisk-image/1946459/428e2842-4157-45e8-a9af-1e5245e52c37/300x450',

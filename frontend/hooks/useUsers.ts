@@ -62,6 +62,17 @@ export function useToggleSaveMovie({token, updateUser, user}: SaveMovieProps){
             queryClient.invalidateQueries({
                 queryKey: ['user', variables.userId]
             })
+            queryClient.invalidateQueries({
+                queryKey: ['savedMovies', variables.userId]
+            })
+
+            queryClient.invalidateQueries({
+                queryKey: ['users']
+            })
+
+            queryClient.invalidateQueries({
+                queryKey: ['profile']
+            })
         }
     })
 }

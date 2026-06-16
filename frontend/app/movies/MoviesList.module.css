@@ -1,26 +1,29 @@
 .cardList {
     display: grid;
-
-    grid-template-columns: repeat(
-        auto-fit,
-        minmax(280px, 280px)
-    );
-
+    grid-template-columns: repeat(auto-fit, minmax(260px, 280px));
     justify-content: center;
 
     width: 100%;
-    max-width: 1300px;
+    
+    min-width: 0;
+
     gap: 30px;
+    box-sizing: border-box;
 }
 
 .moviePage {
-    padding-top: 20px;
     width: 100%;
+    min-height: 100%;
+
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    gap: 10px;
+
+    padding: 24px 20px 40px;
+    gap: 18px;
+
+    box-sizing: border-box;
 }
 
 .moviePage h1 {
@@ -55,4 +58,16 @@
 
 .hidden {
     opacity: 0;
+}
+
+@media (max-width: 600px) {
+    .moviePage {
+        padding: 20px 14px 32px;
+    }
+
+    .cardList {
+        grid-template-columns: 1fr;
+        max-width: 320px;
+        gap: 22px;
+    }
 }

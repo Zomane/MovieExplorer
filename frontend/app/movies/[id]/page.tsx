@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getMovieById } from '@/api/movies'
-import MovieClientPage from './MovieClientPage'
+import MovieClientPage from '@/components/movies/MovieClientPage'
 
 
 type Props = {

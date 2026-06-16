@@ -25,27 +25,20 @@ export default function MoviesPage() {
     const q = searchParams.get('q') ?? ''
     const [search, setSearch] = useState(q)
 
-
-
-
     useEffect(() => {
-        setSearch(q)
-    }, [q])
-
-    useEffect(() => {
+        if (search.trim() === q.trim()) return
         const timer = setTimeout(() => {
-
-            if(search === q) return
-
             const params = new URLSearchParams(searchParams.toString())
 
             if (search.trim()) {
-                params.set('q', search)
+                params.set('q', search.trim())
             } else {
                 params.delete('q')
             }
 
-            router.replace(`/movies?${params.toString()}`)
+        const queryString = params.toString()
+
+        router.replace(queryString ? `/movies?${queryString}` : '/movies')
         }, 500)
 
         return () => clearTimeout(timer)
@@ -71,6 +64,7 @@ export default function MoviesPage() {
             }, {
                 onError: (error) => {
                     setError(error.message)
+                    setIsVisible(true)
                 }
             }
             
@@ -96,7 +90,7 @@ export default function MoviesPage() {
     }, [error])
 
     const filteredMovies = useMemo(() => 
-        (movies ?? []).filter(movie => movie.title.toLowerCase().includes(q.toLowerCase())
+        (movies ?? []).filter(movie => movie.title.toLowerCase().includes(q.trim().toLowerCase())
     ),[movies, q])
 
     return (

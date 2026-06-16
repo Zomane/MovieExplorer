@@ -1,6 +1,8 @@
 import { getUserById } from "@/api/users"
+import UserClientPage from "@/components/users/UserClientPage"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
+
 
 type Params = {
     params: Promise<{id: string}>
@@ -23,17 +25,12 @@ export async function generateMetadata({params}: Params): Promise<Metadata>{
 export default async function UserPage({params}: Params) {
     const {id} = await params
     const user = await getUserById(id)
-
     if(!user){
         notFound()
     }
 
     return (
-        <div>
-            <h1>Это пользователь: {user.login}</h1>
-            <p>{user.email}</p>
-            <p>{user.role}</p>
-        </div>
+        <UserClientPage user={user} />
         
     )
 }
