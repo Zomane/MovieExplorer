@@ -27,7 +27,7 @@ const users: UserEntity[] = [
     {
         id:"1781024263801",
         login:"stsipa",
-        email:"step.tsipa@gmail.com",
+        email:"stsipa@gmail.com",
         role:"user",
         pass:"$2b$10$wLo7kFr3zaljCx2vOZ.Kj.yfRQBFjphgE.o9t8mVaDvqeNQmWcLWa",
         savedMovieIds:[]
@@ -35,7 +35,7 @@ const users: UserEntity[] = [
     {
         id:"1781024275492",
         login:"stsipa1",
-        email:"tsybulkin.step@mail.ru",
+        email:"stsipa1@mail.ru",
         role:"user",
         pass:"$2b$10$wLo7kFr3zaljCx2vOZ.Kj.yfRQBFjphgE.o9t8mVaDvqeNQmWcLWa",
         savedMovieIds:['3', '2']
