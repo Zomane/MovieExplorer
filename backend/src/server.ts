@@ -9,6 +9,7 @@ import { Request, Response, NextFunction } from 'express'
 
 dotenv.config()
 const JWT_SECRET = process.env.JWT_SECRET
+const PORT = process.env.PORT || 3001
 
 if (!JWT_SECRET) {
     throw new Error('JWT_SECRET not found')
@@ -17,14 +18,10 @@ if (!JWT_SECRET) {
 const app = express()
 
 app.use(cors({
-    origin: 'http://localhost:3000'
+    origin: process.env.CLIENT_URL || 'http://localhost:3000'
 }))
 
 app.use(express.json())
-
-app.listen( 3001, () => {
-  console.log('Server started')
-})
 
 const users: UserEntity[] = [
     {
@@ -536,3 +533,10 @@ app.post('/auth/login', async(req, res) => {
 
 })
 
+const server = app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`)
+})
+
+server.on('error', (error) => {
+    console.error('Server error:', error)
+})

@@ -191,6 +191,7 @@
     }
 
     .hero h1 {
+        font-size: clamp(38px, 13vw, 48px);
         letter-spacing: -2px;
     }
 

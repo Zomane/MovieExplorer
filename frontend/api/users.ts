@@ -1,9 +1,10 @@
 import { Movie } from "@/types/movieType";
 import { LoginDto, RegisterDto, User } from "@/types/userType";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
 
 export async function getUsers(): Promise<User[]> {
-    const res = await fetch('http://localhost:3001/users')
+    const res = await fetch(`${API_URL}/users`)
     
     if(!res.ok){
         throw new Error('Не удалось получить пользователей')
@@ -13,7 +14,7 @@ export async function getUsers(): Promise<User[]> {
 }
 
 export async function getUserById(id: string): Promise<User | null> {
-    const res = await fetch(`http://localhost:3001/users/${id}`)
+    const res = await fetch(`${API_URL}/users/${id}`)
     if (res.status === 404) {
         return null
     }
@@ -25,7 +26,7 @@ export async function getUserById(id: string): Promise<User | null> {
 }
 
 export async function toggleSaveMovie(id: string, movieId: string, token: string): Promise<User> {
-    const res = await fetch(`http://localhost:3001/users/${id}/favorites`, {
+    const res = await fetch(`${API_URL}/users/${id}/favorites`, {
         method: 'PATCH',
         headers: {
             'Content-Type':'application/json',
@@ -48,7 +49,7 @@ export async function toggleSaveMovie(id: string, movieId: string, token: string
 }
 
 export async function registerUser({login, email, pass}: RegisterDto): Promise<{message: string}> {
-    const res = await fetch('http://localhost:3001/auth/register', {
+    const res = await fetch(`${API_URL}/auth/register`, {
         method: 'POST',
         headers: {
             'Content-Type':'application/json'
@@ -72,7 +73,7 @@ export async function registerUser({login, email, pass}: RegisterDto): Promise<{
 }
 
 export async function loginUser({login, pass}: LoginDto): Promise<{token: string, loginedUser: User}> {
-    const res = await fetch('http://localhost:3001/auth/login', {
+    const res = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
         headers: { 
             'Content-Type':'application/json'
@@ -91,7 +92,7 @@ export async function loginUser({login, pass}: LoginDto): Promise<{token: string
 }
 
 export async function getProfile(token: string): Promise<User> {
-    const res = await fetch(`http://localhost:3001/profile`, {
+    const res = await fetch(`${API_URL}/profile`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`
@@ -108,7 +109,7 @@ export async function getProfile(token: string): Promise<User> {
 }
 
 export async function getSavedMovies(id: string): Promise<Movie[]>{
-    const res = await fetch(`http://localhost:3001/users/${id}/savedMovies`)
+    const res = await fetch(`${API_URL}/users/${id}/savedMovies`)
 
     if(!res.ok){
         const errorData = await res.json()
@@ -119,7 +120,7 @@ export async function getSavedMovies(id: string): Promise<Movie[]>{
 }
 
 export async function changeUserLogin(token: string, login: string): Promise<User> {
-    const res = await fetch(`http://localhost:3001/profile/changeLogin`, {
+    const res = await fetch(`${API_URL}/profile/changeLogin`, {
         method: 'PATCH',
         headers: {
             'Content-Type':'application/json',
@@ -139,7 +140,7 @@ export async function changeUserLogin(token: string, login: string): Promise<Use
 }
 
 export async function changeUserPass(token: string, currentPass: string, newPass: string): Promise<{message: string}> {
-    const res = await fetch('http://localhost:3001/profile/changePass', {
+    const res = await fetch(`${API_URL}/profile/changePass`, {
         method: 'PATCH',
         headers: {
             'Content-Type':'application/json',
@@ -160,7 +161,7 @@ export async function changeUserPass(token: string, currentPass: string, newPass
 }
 
 export async function deleteUser(token: string): Promise<{message: string}> {
-    const res = await fetch('http://localhost:3001/profile/delete', {
+    const res = await fetch(`${API_URL}/profile/delete`, {
         method: 'DELETE',
         headers: {
             'Authorization':`Bearer ${token}`

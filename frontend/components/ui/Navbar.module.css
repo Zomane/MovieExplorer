@@ -118,3 +118,18 @@
     background: #30363d;
 }
 
+@media (max-width: 600px) {
+    .header {
+        flex-wrap: wrap;
+        padding: 5px 12px;
+    }
+
+    .nav {
+        flex-wrap: wrap;
+    }
+
+    .loginNav {
+        margin-left: auto;
+    }
+}
+

@@ -14,3 +14,11 @@
     align-items: center;
     gap: 10px;
 }
+
+@media (max-width: 600px) {
+    .footer {
+        flex-wrap: wrap;
+        padding: 16px 12px;
+        gap: 12px;
+    }
+}
