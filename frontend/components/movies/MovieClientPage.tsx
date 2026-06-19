@@ -81,7 +81,8 @@ export default function MovieClientPage({movie}: Props) {
                         <button className={styles.saveBtn} onClick={handleSave} disabled={toggleMovieMutation.isPending}>{isSaved?'Убрать':'Сохранить'}</button>
                         <button className={styles.backBtn} onClick={handleNav}>К списку фильмов</button>
                     </div>
-                    {error && <p className={`${styles.errorText} ${!isVisible?styles.hidden:''}`}>{error}</p>}
+                    {}
+                    {error && <p className={`${styles.errorText} ${!isVisible?styles.hidden:''}`}>{error}</p> || <p className={styles.errorText}></p>}
                 </div>
             </div>
             
