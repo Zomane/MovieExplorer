@@ -98,3 +98,9 @@
 .hidden {
     opacity: 0;
 }
+
+.emptyText {
+    margin: 0;
+    color: #94a3b8;
+    text-align: center;
+}
