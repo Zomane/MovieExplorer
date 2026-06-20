@@ -5,7 +5,7 @@ Full-stack приложение для поиска фильмов, создан
 ## Demo
 
 - Live: https://movie.goodwaitik.tech
-- Backend/API: будет добавлено после деплоя на Render https://api.movie.goodwaitik.tech
+- Backend/API: https://api.movie.goodwaitik.tech
 - Repository: [github.com/Zomane/MovieExplorer](https://github.com/Zomane/MovieExplorer)
 
 ## Screenshots
@@ -134,4 +134,4 @@ Frontend будет доступен по адресу `http://localhost:3000`, 
 
 - подключить базу данных + Redis вместо хранения данных в памяти
 - добавить unit и integration тесты
-- добавить документацию API через OpenAPI/Swagger
+- сделать админ панель для добавления/изменения/удаления фильмов
