@@ -4,7 +4,7 @@ Full-stack приложение для поиска фильмов, создан
 
 ## Demo
 
-- Live: https://movie.goodwaitik.tech
+- Live: https://movie.goodwaitik.tech (если сайт не загружается, попробуйте включить впн)
 - Backend/API: https://api.movie.goodwaitik.tech
 - Repository: [github.com/Zomane/MovieExplorer](https://github.com/Zomane/MovieExplorer)
 
