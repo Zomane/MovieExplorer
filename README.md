@@ -10,7 +10,15 @@ Full-stack приложение для поиска фильмов, создан
 
 ## Screenshots
 
-Скриншоты будут добавлены позже.
+<img width="2495" height="1313" alt="image" src="https://github.com/user-attachments/assets/cce424e2-8cf0-46b4-b686-1c56e0dbb3e4" />
+<img width="2493" height="1312" alt="image" src="https://github.com/user-attachments/assets/02ea0d83-d03a-4799-b301-766558c8a06a" />
+<img width="2494" height="1313" alt="image" src="https://github.com/user-attachments/assets/7e2d643f-a43d-482a-9289-e3eab5eec92b" />
+<img width="2494" height="1308" alt="image" src="https://github.com/user-attachments/assets/0c4cd2a3-64b6-422c-8347-e79ad16626a0" />
+<img width="2510" height="1311" alt="image" src="https://github.com/user-attachments/assets/7b0ee005-a6cf-49ab-bbfc-0ff3cab1d2ad" />
+<img width="2504" height="1313" alt="image" src="https://github.com/user-attachments/assets/649bba75-894e-4c61-b898-737a507d0410" />
+<img width="2501" height="1311" alt="image" src="https://github.com/user-attachments/assets/dcd4f10d-81a6-452a-a387-165e40f54f50" />
+<img width="2506" height="1316" alt="image" src="https://github.com/user-attachments/assets/cec1bd19-7bba-45dc-9e25-288742696a4c" />
+<img width="2511" height="1311" alt="image" src="https://github.com/user-attachments/assets/fa9fc7c4-76ee-4444-8fcc-168e9729bd83" />
 
 ## Features
 
