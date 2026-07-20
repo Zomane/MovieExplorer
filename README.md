@@ -2,13 +2,13 @@
 
 Full-stack приложение для поиска фильмов, создания личной коллекции и просмотра профилей других пользователей. Проект включает клиент на Next.js и REST API с JWT авторизацией
 
-## Demo
+## Демонстрация
 
 - Live: https://movie.goodwaitik.tech (если сайт не загружается, попробуйте включить впн)
 - Backend/API: https://api.movie.goodwaitik.tech
 - Repository: [github.com/Zomane/MovieExplorer](https://github.com/Zomane/MovieExplorer)
 
-## Screenshots
+## Скриншоты
 
 <img width="2495" height="1313" alt="image" src="https://github.com/user-attachments/assets/cce424e2-8cf0-46b4-b686-1c56e0dbb3e4" />
 <img width="2493" height="1312" alt="image" src="https://github.com/user-attachments/assets/02ea0d83-d03a-4799-b301-766558c8a06a" />
@@ -20,7 +20,7 @@ Full-stack приложение для поиска фильмов, создан
 <img width="2506" height="1316" alt="image" src="https://github.com/user-attachments/assets/cec1bd19-7bba-45dc-9e25-288742696a4c" />
 <img width="2511" height="1311" alt="image" src="https://github.com/user-attachments/assets/fa9fc7c4-76ee-4444-8fcc-168e9729bd83" />
 
-## Features
+## Возможности
 
 - просмотр каталога и отдельных страниц фильмов
 - поиск фильмов и пользователей с сохранением запроса в URL
@@ -32,7 +32,7 @@ Full-stack приложение для поиска фильмов, создан
 - удаление аккаунта
 - состояния загрузки, ошибок и страница 404
 
-## Tech Stack
+## Технологии
 
 **Frontend:**
 
@@ -48,12 +48,11 @@ Full-stack приложение для поиска фильмов, создан
 - Node.js
 - Express
 - TypeScript
-- JSON Web Token
+- JWT
 - bcrypt
 - CORS и dotenv
 
-## Project Structure
-
+## Структура проекта
 ```text
 MovieExplorer/
 |-- frontend/
@@ -70,16 +69,8 @@ MovieExplorer/
         `-- types/    # TypeScript типы серверной части
 ```
 
-## Getting Started
-
-### Clone Repository
-
-```bash
-git clone https://github.com/Zomane/MovieExplorer.git
-cd MovieExplorer
-```
-
-### Install Dependencies
+## Запуск проекта
+### Установка зависимостей
 
 ```bash
 cd frontend
@@ -89,23 +80,12 @@ cd ../backend
 npm install
 ```
 
-### Environment Variables
+### Переменные окружения
 
-Создайте файл `backend/.env` по примеру:
+Backend использует переменные из `backend/.env.example`
+Frontend использует переменные из `frontend/.env.example`
 
-```env
-JWT_SECRET=your_secret
-CLIENT_URL=http://localhost:3000
-PORT=3001
-```
-
-И файл `frontend/.env` по примеру:
-
-```env
-NEXT_PUBLIC_API_URL = http://localhost:3001
-```
-
-### Run Project
+### Запуск приложения
 
 Запустите backend:
 
@@ -123,22 +103,24 @@ npm run dev
 
 Frontend будет доступен по адресу `http://localhost:3000`, backend — `http://localhost:3001`.
 
-## Scripts
+## Команды
 
 **Frontend:**
-
-- `npm run dev` — запуск в режиме разработки
-- `npm run build` — production-сборка
-- `npm run start` — запуск production-сборки
-- `npm run lint` — проверка ESLint
+```bash
+`npm run dev`
+`npm run build`
+`npm run start`
+`npm run lint`
+```
 
 **Backend:**
+```bash
+`npm run dev`
+`npm run build`
+`npm run start`
+```
 
-- `npm run dev` — запуск API через ts-node
-- `npm run build` — компиляция TypeScript
-- `npm run start` — запуск скомпилированного API
-
-## Future Improvements
+## Возможные улучшения
 
 - подключить базу данных + Redis вместо хранения данных в памяти
 - добавить unit и integration тесты
