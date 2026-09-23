@@ -1,65 +1,49 @@
 .userCard {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-
-    border: 1px solid #30363d;
-    padding: 12px;
-
-    width: 230px;
-    min-height: 220px;
-
-    gap: 10px;
-
-    background-color: #0c0c0c;
-    border-radius: 10px;
-    position: relative;
-
-    box-shadow: 0 0 10px #033e6e80;
-    transition: box-shadow 0.3s ease;
-}
-
-.userCard:hover {
-    box-shadow: 0 0 18px #033e6e99;
+    gap: 16px;
+    min-width: 0;
+    padding: 28px 16px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
 }
 
 .userLogo {
-    border: 1px solid #30363d;
+    width: 64px;
+    height: 64px;
     border-radius: 50%;
-    background-color: #111827;
-}
-
-.savedCount {
-    padding: 6px 10px;
-    border-radius: 999px;
-    background-color: #111827;
-    border: 1px solid #30363d;
-    color: #94a3b8;
-    font-size: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface-hover);
 }
 
 .userCard h2 {
-    margin: 0;
-    font-size: 20px;
-    color: #e2e8f0;
-    max-width: 90%;
+
+    font-size: 18px;
+
+    text-align: center;
+
+}
+.savedCount {
+    color: var(--muted);
+    font-size: 13px;
     text-align: center;
 }
 
 .navButton {
-    background-color:#1c2a3a;
-    color: #dddddd;
-    border: 1px solid #30363d;
-    border-radius: 10px;
-    width: 120px;
-    height: 35px;
-    cursor: pointer;
-    transition: transform 0.5s ease, box-shadow 0.5s ease;    
+    width: 100%;
+    margin-top: auto;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--foreground);
+    background: var(--surface-hover);
+    font-size: 14px;
 }
 
 .navButton:hover {
-    transform: scale(1.04);
-    box-shadow: 0 0 15px #033e6e80;
-}
 
+    background: #303949;
+
+}

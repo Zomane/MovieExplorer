@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import styles from './Login.module.css'
+import Link from 'next/link'
 
 export default function Login(){
     const auth = useAuth()
@@ -14,16 +15,13 @@ export default function Login(){
     const {register, handleSubmit, formState: {errors}, reset } = useForm<LoginDto>()
 
     const [error, setError] = useState<string | null>(null);
-    const [isVisible, setIsVisible] = useState(false) 
-
-    const formError = errors.login?.message || errors.pass?.message
+    const [showPassword, setShowPassword] = useState(false)
 
     const onLogin: SubmitHandler<LoginDto> = (formData) => {
         setError(null)
         loginMutation.mutate(formData, {
             onError: (error) => {
                 setError(error.message)
-                setIsVisible(true)
             },
             onSuccess: (data) => {
                 auth.login(data.token, data.loginedUser)
@@ -32,21 +30,6 @@ export default function Login(){
             }
         })
     } 
-
-    useEffect(() => {
-        if(!error) return
-        const hideTimer = setTimeout(() => {
-            setIsVisible(false)
-        }, 2000)
-        const removeTimer = setTimeout(()=>{
-            setError(null)
-        }, 2500)
-
-        return () => {
-            clearTimeout(hideTimer)
-            clearTimeout(removeTimer)
-        } 
-    }, [error])
 
     useEffect(() => {
         if (auth.token) {
@@ -59,7 +42,9 @@ export default function Login(){
             <div className={styles.loginPage}>
                 <form className={styles.loginForm} onSubmit={handleSubmit(onLogin)}>
                     <h1 className={styles.loginTitle}>Вход</h1>
-                    <input className={`${styles.input}`} placeholder="Введите логин" {...register('login', {
+                    <p className={styles.subtitle}>Ваша коллекция уже ждёт вас.</p>
+                    <label htmlFor="login">Логин</label>
+                    <input id="login" autoComplete="username" aria-invalid={!!errors.login} aria-describedby={errors.login ? 'login-error' : undefined} className={styles.input} placeholder="Введите логин" {...register('login', {
                         required: 'Введите логин',
                         minLength: {
                             value: 5,
@@ -67,7 +52,10 @@ export default function Login(){
                         }
                     })} />
 
-                    <input className={`${styles.input}`} type='password' placeholder="Введите пароль" {...register('pass', {
+                    {errors.login && <p className={styles.errorText} id="login-error" role="alert">{errors.login.message}</p>}
+                    <label htmlFor="password">Пароль</label>
+                    <div className={styles.passwordField}>
+                    <input id="password" autoComplete="current-password" aria-invalid={!!errors.pass} aria-describedby={errors.pass ? 'password-error' : undefined} className={styles.input} type={showPassword ? 'text' : 'password'} placeholder="Введите пароль" {...register('pass', {
                         required: 'Введите пароль',
                         minLength: {
                             value: 8, 
@@ -75,9 +63,12 @@ export default function Login(){
                         }
                     })} />
 
-                    {formError && <p className={`${styles.errorText}`}>{formError}</p>}
+                    <button type="button" className={styles.showPassword} onClick={() => setShowPassword(!showPassword)} aria-pressed={showPassword}>{showPassword ? 'Скрыть' : 'Показать'}</button>
+                    </div>
+                    {errors.pass && <p className={styles.errorText} id="password-error" role="alert">{errors.pass.message}</p>}
                     <button className={`${styles.loginBtn}`} type='submit' disabled={loginMutation.isPending}>{loginMutation.isPending? 'Вход...': 'Войти'}</button>
-                    {error && <p className={`${styles.errorText} ${!isVisible?styles.hidden:''}`}>{error}</p>}
+                    {error && <p className={styles.errorText} role="alert">{error}</p>}
+                    <p className={styles.switchPage}>Нет аккаунта? <Link href="/registration">Регистрация</Link></p>
 
                 </form>
             </div>

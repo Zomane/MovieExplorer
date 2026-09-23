@@ -18,6 +18,7 @@ export default function MovieClientPage({movie}: Props) {
 
     const [error, setError] = useState<string | null>(null)
     const [isVisible, setIsVisible] = useState(false)     
+    const [failedImage, setFailedImage] = useState<string | null>(null)
 
     const router = useRouter()
     const toggleMovieMutation = useToggleSaveMovie({token, updateUser: auth.updateUser, user: auth.user})
@@ -44,12 +45,12 @@ export default function MovieClientPage({movie}: Props) {
         if (!error) return
         const hideTimer = setTimeout(() => {
             setIsVisible(false)
-        }, 2000)
+        }, 4500)
 
         const timer = setTimeout(() => {
             setError(null)
             setIsVisible(false)
-        }, 2300)
+        }, 5000)
 
         return () => {
             clearTimeout(timer)
@@ -65,24 +66,23 @@ export default function MovieClientPage({movie}: Props) {
     return (
         <div className={styles.moviePage}>
             <div className={styles.movieCard}>
-                <Image className={styles.image} src={movie.imgLink} width={300} height={450} alt='movie image' />
+                <div className={styles.posterBlock}>
+                    <Image className={styles.image} src={!movie.imgLink || failedImage === movie.imgLink ? '/poster-placeholder.svg' : movie.imgLink} onError={() => setFailedImage(movie.imgLink)} width={300} height={450} alt={movie.title} />
+                </div>
                 <div className={styles.movieInfo}>
                     <h1>{movie.title}</h1>
                     <div className={styles.meta}> 
-                        <span>{movie.year}</span>
-
+                        <span>Год: {movie.year}</span>
                         <span>{movie.genre}</span>
-  
-                        <span>⭐ {movie.rating}</span>
+                        <span className={styles.rating}>★ {movie.rating}</span>
                     </div>
-                    <p className={styles.director}>Режиссер: {movie.director}</p>
+                    <p className={styles.director}><span>Режиссёр</span>{movie.director}</p>
                     <p className={styles.description}>{movie.description}</p>
                     <div className={styles.btnsContainer}>
-                        <button className={styles.saveBtn} onClick={handleSave} disabled={toggleMovieMutation.isPending}>{isSaved?'Убрать':'Сохранить'}</button>
+                        <button className={styles.saveBtn} onClick={handleSave} aria-pressed={isSaved} disabled={toggleMovieMutation.isPending}>{toggleMovieMutation.isPending ? 'Сохранение...' : isSaved ? 'Убрать из избранного' : 'В избранное'}</button>
                         <button className={styles.backBtn} onClick={handleNav}>К списку фильмов</button>
                     </div>
-                    {}
-                    {error && <p className={`${styles.errorText} ${!isVisible?styles.hidden:''}`}>{error}</p> || <p className={styles.errorText}></p>}
+                    {error && <p role="alert" className={`${styles.errorText} ${!isVisible?styles.hidden:''}`}>{error}</p>}
                 </div>
             </div>
             

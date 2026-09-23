@@ -4,6 +4,7 @@ import { useProfileMovies } from "@/hooks/useMovies"
 import { useAuth } from "@/providers/AuthProvider"
 import { User } from "@/types/userType"
 import MovieCard from "../movies/MovieCard"
+import Loader from "../loading/Loader"
 import { useRouter } from "next/navigation"
 import { useCallback, useEffect, useState } from "react"
 import { useToggleSaveMovie } from "@/hooks/useUsers"
@@ -56,12 +57,12 @@ export default function UserClientPage({user}: Params) {
         
         const hideTimer = setTimeout(() => {
             setIsVisible(false)
-        }, 2000)
+        }, 4500)
 
         const timer = setTimeout(() => {
             setError(null)
             setIsVisible(false)
-        }, 2300)
+        }, 5000)
 
         return () => {
             clearTimeout(hideTimer)
@@ -72,7 +73,7 @@ export default function UserClientPage({user}: Params) {
     return (
         <div className={styles.userPage}>
             <div className={styles.userCard}>
-                <Image className={styles.logoImage} src="/userLogo.png" width={130} height={130} alt="profile image" />
+                <Image className={styles.logoImage} src="/userLogo.png" width={130} height={130} alt="Аватар пользователя" />
                 <div className={styles.profileInfo}>
                     <h2>{user.login}</h2>
                     <p>{user.email}</p>
@@ -90,7 +91,8 @@ export default function UserClientPage({user}: Params) {
                     </div>
                 </div>
             </div>
-            <h1>Сохраненные фильмы</h1>
+            <h1>Сохранённые фильмы</h1>
+            {isMoviePending && <Loader cards />}
 
             <div className={styles.savedMovies}>
                 {isMovieError && <h3>{movieError.message}</h3>}

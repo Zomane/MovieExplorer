@@ -1,98 +1,95 @@
 .userPage {
-    min-height: 100%;
-    padding: 20px 20px;
-
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 20px;
-
-    color: #e2e8f0;
+    gap: 28px;
 }
 
 .userPage h1 {
-    font-size: 30px;
+    text-align: center;
+    font-size: 28px;
 }
 
 .userCard {
-    width: min(100%, 520px);
-    padding: 28px;
-
-    background: #080d17;
-    border: 1px solid #30363d;
-    border-radius: 22px;
-
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
     position: relative;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 24px;
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
 }
 
 .logoImage {
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    border: 2px solid #334155;
-    box-shadow: 0 0 24px rgba(37, 99, 235, 0.18);
+    border: 1px solid var(--border);
+    background: var(--surface-hover);
 }
 
 .profileInfo {
-    text-align: center;
+    min-width: 0;
+    flex: 1;
 }
-
 .profileInfo h2 {
-    margin: 0;
     font-size: 26px;
-    color: #f8fafc;
 }
 
 .profileInfo p {
-    margin: 6px 0 0;
-    color: #94a3b8;
+    color: var(--muted);
     font-size: 14px;
+    margin-top: 6px;
+    overflow-wrap: anywhere;
 }
 
 .profileStats {
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-}
-
-.statItem {
-    padding: 12px;
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 14px;
-    text-align: center;
+    display: flex;
+    gap: 28px;
 }
 
 .statItem span {
     display: block;
-    color: #94a3b8;
+    color: var(--muted);
     font-size: 13px;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
 
 .statItem strong {
-    color: #f8fafc;
-    font-size: 16px;
+    font-size: 18px;
+}
+
+.settingsBtn {
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.settingsBtn:hover {
+    background: var(--surface-hover);
 }
 
 .savedMovies {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 30px;
-    width: 100%;
+    gap: 24px;
+}
+
+.savedMovies > article {
+    flex: 0 1 calc((100% - 72px) / 4);
+    max-width: 280px;
 }
 
 .errorText {
-    margin: 0;
-    color: #f87171;
-    opacity: 1;
-    text-align: center;
-    transition: opacity 0.5s ease;
+    color: var(--error);
+    font-size: 14px;
+    overflow-wrap: anywhere;
 }
 
 .hidden {
@@ -100,7 +97,52 @@
 }
 
 .emptyText {
-    margin: 0;
-    color: #94a3b8;
+    width: 100%;
+    padding: 36px 20px;
     text-align: center;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+}
+
+.emptyText a {
+    display: block;
+    margin-top: 12px;
+    color: #9bb7fa;
+}
+
+@media (max-width: 1000px) {
+    .savedMovies > article {
+        flex-basis: calc((100% - 48px) / 3);
+    }
+    .profileStats {
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .userPage {
+        padding: 32px 16px 48px;
+    }
+    .userCard {
+        padding: 20px;
+        gap: 16px;
+    }
+    .logoImage {
+        width: 56px;
+        height: 56px;
+    }
+    .savedMovies {
+        gap: 12px;
+    }
+    .savedMovies > article {
+        flex-basis: calc((100% - 12px) / 2);
+    }
+}
+
+@media (max-width: 360px) {
+    .savedMovies > article {
+        flex-basis: 100%;
+    }
 }

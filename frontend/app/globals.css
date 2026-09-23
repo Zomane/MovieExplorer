@@ -1,44 +1,112 @@
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-.header {grid-area: header;}
-.main {grid-area: main;}
-.footer {grid-area: footer;}
-
-html {
-  min-height: 100vh;
-}
-
-body {
-  min-height: 100vh;
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  display: grid;
-    grid-template-areas: 
-    "header"
-    "main"
-    "footer";
-  gap: 15px;
-  margin: 0;
-  grid-template-rows: auto 1fr auto;
-  color: var(--foreground);
-}
-
-p, h1, h2, h3, h4, h5 {
-  margin: 0;
+    color-scheme: dark;
+    --background: #101216;
+    --surface: #191c22;
+    --surface-hover: #222730;
+    --border: #303640;
+    --foreground: #f3f4f6;
+    --muted: #a2aab8;
+    --accent: #4778ed;
+    --accent-hover: #3767d5;
+    --error: #ff9999;
+    --success: #8bd9af;
 }
 
 * {
+
     box-sizing: border-box;
+
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.main {
+
+    min-width: 0;
+
+}
+h1, h2, h3, p {
+    margin: 0;
+}
+
+h1, h2, h3 {
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    letter-spacing: -1px;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button, input {
+
+    font: inherit;
+
+}
+
+button {
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+input {
+    min-width: 0;
+    padding: 12px 14px;
+    color: var(--foreground);
+    background: var(--background);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+input::placeholder {
+
+    color: var(--muted);
+
+}
+input:focus {
+    border-color: var(--accent);
+}
+
+:focus-visible {
+    outline: 2px solid #88aaff;
+    outline-offset: 4px;
+}
+
+img {
+
+    max-width: 100%;
+
+}
+
+::selection {
+    background: #345baf;
+    color: white;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation: none !important;
+        transition: none !important;
+    }
 }

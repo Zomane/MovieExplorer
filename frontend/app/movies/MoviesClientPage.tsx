@@ -2,6 +2,7 @@
 
 import styles from './MoviesList.module.css'
 import MovieCard from "@/components/movies/MovieCard"
+import Loader from "@/components/loading/Loader"
 import { useMovies } from "@/hooks/useMovies"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -76,12 +77,12 @@ export default function MoviesPage() {
         if (!error) return
         const hideTimer = setTimeout(() => {
             setIsVisible(false)
-        }, 2000)
+        }, 4500)
 
         const timer = setTimeout(() => {
             setError(null)
             setIsVisible(false)
-        }, 2300)
+        }, 5000)
 
         return () => {
             clearTimeout(timer)
@@ -95,12 +96,18 @@ export default function MoviesPage() {
 
     return (
         <div className={styles.moviePage}>
-            <h1>Список фильмов</h1>
-            <input className={styles.search} value={search} placeholder="Введите название" onChange={(e) => setSearch(e.target.value)}/>
+            <div className={styles.pageHeader}>
+                <div>
+                    <h1>Фильмы</h1>
+                    <p className={styles.subtitle}>Найдите кино, к которому захочется вернуться.</p>
+                </div>
+                <input className={styles.search} type="search" aria-label="Поиск фильмов" value={search} placeholder="Поиск по названию" onChange={(e) => setSearch(e.target.value)}/>
+            </div>
+            {!isLoading && !isMovieError && <p className={styles.count} aria-live="polite">Найдено фильмов: {filteredMovies.length}</p>}
 
-            {isLoading && <h3>Загрузка...</h3>}
-            {!isLoading && isMovieError && <h3>{moviesError.message}</h3>}
-            {!isLoading && !isMovieError && filteredMovies.length === 0 && <p>Фильм не найден</p>}
+            {isLoading && <Loader cards />}
+            {!isLoading && isMovieError && <p className={styles.errorText} role="alert">{moviesError.message}</p>}
+            {!isLoading && !isMovieError && filteredMovies.length === 0 && <p className={styles.emptyText}>Ничего не найдено. Попробуйте другое название.</p>}
        
             <div className={styles.cardList}>
                 {filteredMovies.map(movie => (

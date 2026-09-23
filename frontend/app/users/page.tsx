@@ -1,6 +1,7 @@
 'use client'
 
 import UserCard from "@/components/users/UserCard";
+import Loader from "@/components/loading/Loader";
 import { useUsers } from "@/hooks/useUsers";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -45,11 +46,17 @@ export default function UsersPage(){
 
     return (
         <div className={styles.usersPage}>
-            <h1>Список пользователей</h1>
-            <input className={styles.search} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Введите логин" />
-            {isLoading && <h3>Загрузка...</h3>}
+            <div className={styles.pageHeader}>
+                <div>
+                    <h1>Коллекции</h1>
+                    <p className={styles.subtitle}>Новые фильмы начинаются с чьей-то любимой коллекции.</p>
+                </div>
+                <input className={styles.search} type="search" aria-label="Поиск коллекций по имени" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Поиск по имени" />
+            </div>
+            {!isLoading && !isError && <p className={styles.count} aria-live="polite">Найдено коллекций: {filteredUsers.length}</p>}
+            {isLoading && <Loader />}
             {!isLoading && isError && <h3 className={styles.errorText}>{error.message}</h3>}
-            {!isLoading && !isError && filteredUsers.length === 0 && <h3>Пользователей не найдено</h3>}
+            {!isLoading && !isError && filteredUsers.length === 0 && <p className={styles.emptyText}>Коллекции не найдены. Попробуйте другое имя.</p>}
             <div className={styles.usersGrid}>
                 {filteredUsers.map(user => 
                         <UserCard key={user.id} user={user} onNavigate={handleNav}/>

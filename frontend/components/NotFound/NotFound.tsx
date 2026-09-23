@@ -7,7 +7,7 @@ export default function NotFound() {
             <div className={styles.card}>
                 <h1>404</h1>
 
-                <h2>Странрица не найдена</h2>
+                <h2>Страница не найдена</h2>
 
                 <p className={styles.description}>
                     Возможно, страница была удалена или вы перешли по неверной ссылке.
@@ -19,7 +19,7 @@ export default function NotFound() {
                     </Link>
 
                     <Link className={styles.secondaryButton} href="/users">
-                        Список пользователей
+                        Коллекции
                     </Link>
                 </div>
             </div>

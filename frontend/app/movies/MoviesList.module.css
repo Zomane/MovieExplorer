@@ -1,73 +1,93 @@
-.cardList {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 280px));
-    justify-content: center;
-
-    width: 100%;
-    
-    min-width: 0;
-
-    gap: 30px;
-    box-sizing: border-box;
-}
-
 .moviePage {
-    width: 100%;
-    min-height: 100%;
-
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 48px 24px 64px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-
-    padding: 24px 20px 40px;
-    gap: 18px;
-
-    box-sizing: border-box;
+    gap: 24px;
 }
 
-.moviePage h1 {
-    font-size: 38px;
+.pageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+}
+
+.subtitle {
+    color: var(--muted);
+    margin-top: 10px;
 }
 
 .search {
-    background-color: black;
-    border: 1px solid #30363d;
-    border-radius: 15px;
-    padding: 8px;
-    padding-left: 12px;
-    width: 220px;
-    color: rgb(221, 221, 221);
+    width: 320px;
+    max-width: 100%;
 }
 
-.search:focus {
-    outline: none;
+.count {
+    color: var(--muted);
+    font-size: 13px;
+}
 
-    border-color: #30363d;
-
-    box-shadow: 0 0 8px rgba(0, 255, 221, 0.3);
-} 
+.cardList {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+}
 
 .errorText {
-    margin: 0;
-    color: #f87171;
-    opacity: 1;
-    text-align: center;
-    transition: opacity 0.5s ease;
+    color: var(--error);
+    font-size: 14px;
+    overflow-wrap: anywhere;
 }
 
 .hidden {
+
     opacity: 0;
+
 }
 
-@media (max-width: 600px) {
-    .moviePage {
-        padding: 20px 14px 32px;
-    }
+.emptyText {
+    grid-column: 1 / -1;
+    padding: 36px 20px;
+    text-align: center;
+    color: var(--muted);
+    background: var(--surface);
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+}
 
+.emptyText a {
+    display: block;
+    margin-top: 12px;
+    color: #9bb7fa;
+}
+
+@media (max-width: 1000px) {
+    .cardList {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+    .moviePage {
+        padding: 32px 16px 48px;
+    }
+    .pageHeader {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .search {
+        width: 100%;
+    }
+    .cardList {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+}
+
+@media (max-width: 360px) {
     .cardList {
         grid-template-columns: 1fr;
-        max-width: 320px;
-        gap: 22px;
     }
 }

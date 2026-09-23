@@ -2,10 +2,11 @@
 
 import styles from './Settings.module.css'  
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useChangeLogin, useChangePass, useDeleteUser } from '@/hooks/useUsers'
 import { useAuth } from '@/providers/AuthProvider'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 type ChangePassForm = {
     currentPass: string; 
@@ -25,9 +26,16 @@ export default function SettingsPage(){
     const [loginMessageType, setLoginMessageType] = useState<'success' | 'error' | null>(null)
     const [passMessageType, setPassMessageType] = useState<'success' | 'error' | null>(null)
 
-    const [isLoginVisible, setIsLoginVisible] = useState(false)
-    const [isPassVisible, setIsPassVisible] = useState(false)
     const [isModalVisible, setIsModalVisible] = useState(false)
+    const dialogRef = useRef<HTMLDialogElement>(null)
+
+    useEffect(() => {
+        if (isModalVisible) {
+            dialogRef.current?.showModal()
+        } else {
+            dialogRef.current?.close()
+        }
+    }, [isModalVisible])
 
     const {register: registerLogin, handleSubmit: handleSubmitLogin, formState: {errors: errorsLogin}, reset: resetLogin} = useForm<ChangeLoginForm>()
     const {register: registerPass, handleSubmit: handleSubmitPass, formState: {errors: errorsPass}, reset: resetPass } = useForm<ChangePassForm>()
@@ -36,36 +44,36 @@ export default function SettingsPage(){
     const passMutation = useChangePass(auth.token ?? '')
     const deleteMutation = useDeleteUser(auth.token ?? '')
 
-    const passFormErrors = errorsPass.newPass?.message || errorsPass.currentPass?.message
-
     const onLoginChange: SubmitHandler<ChangeLoginForm> = (formData) => {
+        setLoginMessage('')
         loginMutation.mutate( formData, {
             onError: (error) => {
                 setLoginMessage(error.message)
                 setLoginMessageType('error')
-                setIsLoginVisible(true)
+
             },
             onSuccess: (data) => {
                 auth.updateUser(data)
                 setLoginMessage('Логин успешно изменён')
                 setLoginMessageType('success')
-                setIsLoginVisible(true)
+
                 resetLogin()
             }
         })
     }
 
     const onPassChange: SubmitHandler<ChangePassForm> = (formData) => {
+        setPassMessage('')
         passMutation.mutate(formData, {
             onError: (error) => {
                 setPassMessage(error.message)
                 setPassMessageType('error')
-                setIsPassVisible(true)
+
             },
             onSuccess: () => {
                 setPassMessage('Пароль успешно изменён')
                 setPassMessageType('success')
-                setIsPassVisible(true)
+
                 resetPass()
             }
         })
@@ -81,47 +89,11 @@ export default function SettingsPage(){
         })
     }
 
-    useEffect(() => {
-        if (!loginMessage) return
-
-        const hideTimer = setTimeout(() => {
-            setIsLoginVisible(false)
-        }, 2000)
-
-        const removeTimer = setTimeout(() => {
-            setLoginMessage('')
-            setLoginMessageType(null)
-        }, 2500)
-
-        return () => {
-            clearTimeout(hideTimer)
-            clearTimeout(removeTimer)
-        }
-    }, [loginMessage])
-
-
-    useEffect(() => {
-        if (!passMessage) return
-
-        const hideTimer = setTimeout(() => {
-            setIsPassVisible(false)
-        }, 2000)
-
-        const removeTimer = setTimeout(() => {
-            setPassMessage('')
-            setPassMessageType(null)
-        }, 2500)
-
-        return () => {
-            clearTimeout(hideTimer)
-            clearTimeout(removeTimer)
-        }
-    }, [passMessage])
-
     if(!auth.token || !auth.user) {
         return (
             <div className={styles.tokenError}>
                 <h1>Необходимо войти в аккаунт</h1>
+                <Link href="/login">Войти</Link>
             </div>
         )
     }
@@ -130,20 +102,30 @@ export default function SettingsPage(){
     <div className={styles.settingsPage}>
         <div className={styles.settings}>
             <div className={styles.settingsHeader}>
+                <Link href="/profile" className={styles.backLink}>← К моей коллекции</Link>
+                <span className={styles.eyebrow}>ЛИЧНЫЙ КАБИНЕТ</span>
                 <h1>Настройки аккаунта</h1>
-                <p>Изменение логина и пароля</p>
+                <p>Ваш профиль, безопасность и доступ к любимому кино.</p>
             </div>
 
             <div className={styles.settingsGrid}>
                 <form className={styles.settingsCard} onSubmit={handleSubmitLogin(onLoginChange)}>
                     <div className={styles.cardHeader}>
+                        <span className={styles.cardIcon} aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                                <circle cx="12" cy="8" r="4" />
+                                <path d="M4 21v-2a8 8 0 0 1 16 0v2" />
+                            </svg>
+                        </span>
+                        <span className={styles.cardLabel}>ПРОФИЛЬ</span>
                         <h2>Логин</h2>
                         <p>Измените публичное имя вашего аккаунта</p>
                     </div>
+                    <p className={styles.currentLogin}>Сейчас вы <strong>{auth.user.login}</strong></p>
 
                     <div className={styles.fieldGroup}>
                         <label htmlFor="login">Новый логин</label>
-                        <input id="login" className={styles.formInput} placeholder="Введите новый логин" {...registerLogin('login', {
+                        <input id="login" autoComplete="username" aria-invalid={!!errorsLogin.login} aria-describedby={errorsLogin.login ? 'login-error' : undefined} className={styles.formInput} placeholder="Введите новый логин" {...registerLogin('login', {
                                 required: 'Введите новый логин',
                                 minLength: {
                                     value: 5,
@@ -152,10 +134,10 @@ export default function SettingsPage(){
                             })}/>
                     </div>
 
-                    {errorsLogin.login && (<p className={styles.errorText}>{errorsLogin.login.message}</p>)}
+                    {errorsLogin.login && (<p className={styles.errorText} id="login-error" role="alert">{errorsLogin.login.message}</p>)}
 
                     {loginMessage && (
-                        <p className={`${loginMessageType === 'error' ? styles.errorText : styles.successText} ${!isLoginVisible ? styles.hidden : ''}`}>{loginMessage}</p>
+                        <p role="status" className={loginMessageType === 'error' ? styles.errorText : styles.successText}>{loginMessage}</p>
                     )}
 
                     <button className={styles.submitBtn} type="submit" disabled={loginMutation.isPending}>
@@ -165,13 +147,20 @@ export default function SettingsPage(){
 
                 <form className={styles.settingsCard} onSubmit={handleSubmitPass(onPassChange)}>
                     <div className={styles.cardHeader}>
+                        <span className={styles.cardIcon} aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                                <rect x="5" y="10" width="14" height="11" rx="3" />
+                                <path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3" />
+                            </svg>
+                        </span>
+                        <span className={styles.cardLabel}>БЕЗОПАСНОСТЬ</span>
                         <h2>Пароль</h2>
                         <p>Обновите пароль для входа в аккаунт</p>
                     </div>
 
                     <div className={styles.fieldGroup}>
                         <label htmlFor="newPass">Новый пароль</label>
-                        <input id="newPass" className={styles.formInput} type="password" placeholder="Введите новый пароль" {...registerPass('newPass', {
+                        <input id="newPass" autoComplete="new-password" aria-invalid={!!errorsPass.newPass} aria-describedby={errorsPass.newPass ? 'new-password-error' : undefined} className={styles.formInput} type="password" placeholder="Введите новый пароль" {...registerPass('newPass', {
                                 required: 'Введите новый пароль',
                                 minLength: {
                                     value: 8,
@@ -180,9 +169,10 @@ export default function SettingsPage(){
                             })}/>
                     </div>
 
+                    {errorsPass.newPass && <p className={styles.errorText} id="new-password-error" role="alert">{errorsPass.newPass.message}</p>}
                     <div className={styles.fieldGroup}>
                         <label htmlFor="currentPass">Текущий пароль</label>
-                        <input id="current" className={styles.formInput} type="password" placeholder="Введите текущий пароль" {...registerPass('currentPass', {
+                        <input id="currentPass" autoComplete="current-password" aria-invalid={!!errorsPass.currentPass} aria-describedby={errorsPass.currentPass ? 'current-password-error' : undefined} className={styles.formInput} type="password" placeholder="Введите текущий пароль" {...registerPass('currentPass', {
                                 required: 'Введите старый пароль',
                                 minLength: {
                                     value: 8,
@@ -191,12 +181,10 @@ export default function SettingsPage(){
                             })}/>
                     </div>
 
-                    {passFormErrors && (
-                        <p className={styles.errorText}>{passFormErrors}</p>
-                    )}
+                    {errorsPass.currentPass && <p className={styles.errorText} id="current-password-error" role="alert">{errorsPass.currentPass.message}</p>}
 
                     {passMessage && (
-                        <p className={`${passMessageType === 'error' ? styles.errorText : styles.successText} ${!isPassVisible ? styles.hidden : ''}`}>{passMessage}</p>
+                        <p role="status" className={passMessageType === 'error' ? styles.errorText : styles.successText}>{passMessage}</p>
                     )}
 
                     <button className={styles.submitBtn} type="submit" disabled={passMutation.isPending}>
@@ -211,30 +199,29 @@ export default function SettingsPage(){
                     <p>После удаления аккаунта восстановить профиль будет невозможно</p>
                 </div>
 
-                <button className={styles.deleteAccountBtn} onClick={() => setIsModalVisible(true)}>
+                <button className={styles.deleteAccountBtn} onClick={() => {
+                    deleteMutation.reset()
+                    setIsModalVisible(true)
+                }}>
                     Удалить аккаунт
                 </button>
             </div>
 
-            {isModalVisible && (
-                <div className={styles.modalOverlay}>
-                    <div className={styles.modal}>
-                        <h2 className={styles.modalTitle}>Удалить аккаунт?</h2>
+            <dialog ref={dialogRef} className={styles.modal} onClose={() => setIsModalVisible(false)} aria-labelledby="delete-title" aria-describedby="delete-description">
+                <h2 className={styles.modalTitle} id="delete-title">Удалить аккаунт?</h2>
 
-                        <p className={styles.modalText}>Это действие нельзя будет отменить. Все данные профиля будут удалены.</p>
+                <p className={styles.modalText} id="delete-description">Это действие нельзя будет отменить. Все данные профиля будут удалены.</p>
+                {deleteMutation.isError && <p className={styles.errorText} role="alert">{deleteMutation.error.message}</p>}
 
-                        <div className={styles.modalBtns}>
-                            <button className={styles.closeBtn} onClick={() => setIsModalVisible(false)}>Отмена</button>
+                <div className={styles.modalBtns}>
+                    <button className={styles.closeBtn} autoFocus onClick={() => setIsModalVisible(false)}>Отмена</button>
 
-                            <button className={styles.deleteBtn} onClick={deleteProfile} disabled={deleteMutation.isPending}>
-                                {deleteMutation.isPending ? 'Удаление...' : 'Удалить'}
-                            </button>
-                        </div>
-                    </div>
+                    <button className={styles.deleteBtn} onClick={deleteProfile} disabled={deleteMutation.isPending}>
+                        {deleteMutation.isPending ? 'Удаление...' : 'Удалить'}
+                    </button>
                 </div>
-            )}
+            </dialog>
         </div>
     </div>
 )
 }
-

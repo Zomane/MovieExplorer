@@ -6,6 +6,7 @@ import { useToggleSaveMovie, useUserProfile } from '@/hooks/useUsers'
 import { useAuth } from '@/providers/AuthProvider'
 import { useProfileMovies } from '@/hooks/useMovies'
 import MovieCard from '@/components/movies/MovieCard'
+import Loader from '@/components/loading/Loader'
 import { useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -49,12 +50,12 @@ export default function ProfilePage() {
       if (!error) return
       const hideTimer = setTimeout(() => {
           setIsVisible(false)
-      }, 2000)
+      }, 4500)
 
       const timer = setTimeout(() => {
           setError(null)
           setIsVisible(false)
-      }, 2300)
+      }, 5000)
 
       return () => {
           clearTimeout(timer)
@@ -72,6 +73,7 @@ export default function ProfilePage() {
     return (
       <div className={styles.tokenError}>
           <h1>Необходимо войти в аккаунт</h1>
+          <Link href="/login">Войти</Link>
       </div>
     )
   }
@@ -79,14 +81,14 @@ export default function ProfilePage() {
   return (
     <div className={styles.profilePage}>
 
-      {isPending && <h1>Загрузка...</h1>}
-      {!isPending && isProfileError && (
-        <h3 className={`${styles.errorText} ${!isVisible?styles.hidden:''}`}>{profileError.message}</h3>
+      {isProfilePending && <Loader />}
+      {isProfileError && (
+        <p className={styles.errorText} role="alert">{profileError.message}</p>
       )}
       
-        {!isPending && !isProfileError && profile && (
+        {!isProfilePending && !isProfileError && profile && (
         <div className={styles.profileCard}>
-          <Image className={styles.logoImage} src="/userLogo.png" width={130} height={130} alt="profile image" />
+          <Image className={styles.logoImage} src="/userLogo.png" width={130} height={130} alt="Аватар пользователя" />
 
             <div className={styles.profileInfo}>
               <h2>{profile.login}</h2>
@@ -106,12 +108,13 @@ export default function ProfilePage() {
             </div>
 
             <Link href="/settings" className={styles.settingsBtn}>
-              <Image src='/settings.png' width={35} height={35} alt='settings button' />
+              Настройки
             </Link>
         </div>
       )}
 
-      <h1>Сохраненные фильмы</h1>
+      <h1>Сохранённые фильмы</h1>
+      {profile && isMoviePending && <Loader cards />}
 
       <div className={styles.savedFilms}>
         {isMovieError && <h3>{movieError.message}</h3>}
@@ -120,7 +123,7 @@ export default function ProfilePage() {
         ))}
         
         {!isPending && !isMovieError && (movies?.length ?? 0) === 0 && (
-          <p className={`${styles.emptyText}`}>У вас пока нет сохранённых фильмов</p>
+          <div className={styles.emptyText}>Ваша коллекция начинается с одного фильма.<Link href="/movies">Перейти в каталог →</Link></div>
         )}
       </div>
 

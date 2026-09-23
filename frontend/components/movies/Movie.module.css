@@ -1,189 +1,165 @@
 .moviePage {
-    width: 100%;
-    min-height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    padding: 0px 20px;
-    gap: 18px;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 56px 24px 72px;
 }
 
 .movieCard {
-    width: 100%;
-    max-width: 980px;
-
     display: flex;
-    gap: 32px;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 32px;
+    border: 1px solid #354157;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #202a3a, var(--surface) 46%);
+    box-shadow: 0 18px 42px #0003;
+}
 
-    padding: 24px;
-
-    background-color: #0c0c0c;
-    border: 1px solid #30363d;
-    border-radius: 18px;
-
-    box-shadow: 0 0 18px #033e6e80;
+.posterBlock {
+    flex-shrink: 0;
+    padding: 8px;
+    border: 1px solid #ffffff18;
+    border-radius: 16px;
+    background: #10151d;
 }
 
 .image {
-    border-radius: 14px;
-    border: 1px solid #30363d;
-
+    width: 300px;
+    height: auto;
+    aspect-ratio: 2 / 3;
     object-fit: cover;
     flex-shrink: 0;
-
+    display: block;
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: 0 12px 28px #0007;
 }
 
 .movieInfo {
-    max-width: 600px;
-
+    min-width: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    gap: 14px;
+    flex: 1;
+    gap: 20px;
+    padding: 14px 8px 8px 0;
+}
+
+.eyebrow {
+    color: #9bb7fa;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.8px;
 }
 
 .movieInfo h1 {
-    margin: 0;
-
-    color: #e2e8f0;
-    font-size: 42px;
-    line-height: 1.1;
+    font-size: clamp(30px, 4vw, 48px);
+    letter-spacing: -1.5px;
 }
-
-
 
 .meta {
     display: flex;
-    align-items: center;
     flex-wrap: wrap;
     gap: 10px;
-
-    color: #94a3b8;
-    font-size: 15px;
 }
 
 .meta span {
-    padding: 5px 9px;
-
-    background-color: #111827;
-    border: 1px solid #30363d;
+    padding: 8px 12px;
+    background: #111821;
+    border: 1px solid #384255;
     border-radius: 999px;
+    color: #b8c0cd;
+    font-size: 14px;
+}
+
+.meta .rating {
+    color: #f2cc7b;
 }
 
 .director {
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 18px;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 10px 10px 0;
+    background: #ffffff08;
+    font-size: 16px;
+}
 
-    color: #cbd5e1;
-    font-size: 17px;
+.director span {
+    color: var(--muted);
+    font-size: 12px;
 }
 
 .description {
-    margin: 0;
-
-    color: #94a3b8;
-    font-size: 17px;
-    line-height: 1.6;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.8;
 }
-
-
 
 .btnsContainer {
     display: flex;
-    gap: 12px;
     flex-wrap: wrap;
-
-    margin-top: 10px;
+    gap: 12px;
+    margin-top: 4px;
 }
 
-.saveBtn,
-.backBtn {
-    padding: 10px 16px;
-
+.saveBtn, .backBtn {
+    padding: 12px 18px;
+    border: 1px solid var(--border);
     border-radius: 10px;
-    border: 1px solid #30363d;
-
-    color: #dddddd;
-    cursor: pointer;
-    background-color: #1c2a3a;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    color: var(--foreground);
+    background: var(--surface);
+    font-size: 14px;
 }
 
-.saveBtn:not(:disabled):hover,
+.saveBtn {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+}
+
+.saveBtn:not(:disabled):hover {
+    background: var(--accent-hover);
+}
+
 .backBtn:hover {
-    transform: translateY(-2px);
-    border-color: #1f6feb;
-    box-shadow: 0 0 15px #033e6e80;
+    background: var(--surface-hover);
 }
-
-.saveBtn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    transform: none;
-}
-
-
 
 .errorText {
-    margin: 0;
-
-    color: #f87171;
-    opacity: 1;
-    transition: opacity 0.3s ease;
+    color: var(--error);
+    font-size: 14px;
+    overflow-wrap: anywhere;
 }
 
 .hidden {
     opacity: 0;
 }
 
-
-
-@media (max-width: 800px) {
+@media (max-width: 700px) {
+    .moviePage {
+        padding: 32px 16px 48px;
+    }
     .movieCard {
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        padding: 20px;
+        gap: 24px;
     }
-
-    .movieInfo {
-        align-items: center;
+    .posterBlock {
+        align-self: center;
     }
-
-    .meta {
-        justify-content: center;
-    }
-
-    .btnsContainer {
-        justify-content: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .moviePage {
-        padding: 0px 14px;
-    }
-
-    .movieCard {
-        padding: 18px;
-    }
-
-    .movieInfo h1 {
-        font-size: 32px;
-    }
-
     .image {
         width: 240px;
-        height: 360px;
     }
-
-    .saveBtn,
-    .backBtn {
-        width: 100%;
+    .movieInfo {
+        padding: 0;
+        gap: 20px;
     }
-
     .btnsContainer {
+        flex-direction: column;
+    }
+    .saveBtn, .backBtn {
         width: 100%;
     }
 }

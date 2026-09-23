@@ -1,212 +1,209 @@
 .homePage {
-    --text: #e2e8f0;
-    --border-gray: #30363d;
-    --border-blue: #1f6feb;
-    --dark-blue: #033e6e80;
-    width: 100%;
-    min-height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    padding: 70px 24px;
-    gap: 64px;
-
-    color: var(--text);
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 64px 24px;
 }
 
 .hero {
-    width: 100%;
-    max-width: 850px;
-
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
     align-items: center;
+    gap: 48px;
+    padding: 24px 0 72px;
+}
 
-    text-align: center;
-    gap: 20px;
+.eyebrow, .featureNumber {
+    color: #9bb7fa;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
 }
 
 .hero h1 {
-    margin: 0;
-
-    font-size: clamp(56px, 9vw, 110px);
-    line-height: 1;
-    letter-spacing: -4px;
-
-    color: var(--border-blue);
-    text-shadow: 0 0 28px #033e6e99;
+    margin: 20px 0;
+    font-size: clamp(36px, 4.5vw, 60px);
+    line-height: 1.12;
+    letter-spacing: -2px;
 }
 
-.hero h2 {
-    margin: 0;
+.hero h1 span {
 
-    font-size: clamp(28px, 4vw, 44px);
-    line-height: 1.15;
+    color: var(--muted);
 
-    color: var(--text);
 }
 
 .description {
-    margin: 0;
-
-    max-width: 680px;
-
-    color: #94a3b8;
-    font-size: 20px;
-    line-height: 1.6;
+    max-width: 480px;
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.8;
 }
 
 .actions {
     display: flex;
-    justify-content: center;
-    gap: 14px;
     flex-wrap: wrap;
-
-    margin-top: 10px;
-}
-
-.primaryButton,
-.secondaryButton {
-    padding: 12px 18px;
-
-    border-radius: 12px;
-    border: 1px solid var(--border-gray);
-
-    text-decoration: none;
-    color: #dddddd;
-
-    background-color: #111827;
-
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-}
-
-.primaryButton:hover,
-.secondaryButton:hover {
-    transform: translateY(-2px);
-    border-color: var(--border-blue);
-    box-shadow: 0 0 16px var(--dark-blue);
-}
-
-.primaryButton:focus-visible,
-.secondaryButton:focus-visible {
-    outline: 2px solid var(--border-blue);
-    outline-offset: 3px;
-}
-
-.features {
-    width: 100%;
-    max-width: 1100px;
-
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 22px;
-}
-
-.featureCard {
-    position: relative;
-    overflow: hidden;
-
-    padding: 24px;
-
-    display: flex;
-    flex-direction: column;
     gap: 12px;
-
-    background-color: #0c0c0c;
-    border: 1px solid var(--border-gray);
-    border-radius: 18px;
-
-    box-shadow: 0 0 14px var(--dark-blue);
-    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 28px;
 }
 
-.featureCard::before {
-    content: '';
-
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-
-    height: 1px;
-
-    background: linear-gradient(
-        90deg,
-        transparent,
-        var(--border-blue),
-        transparent
-    );
-
-    opacity: 0.7;
+.primaryButton, .secondaryButton {
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
 }
 
-.featureCard:hover {
-    transform: translateY(-4px);
-    border-color: var(--border-blue);
-    box-shadow: 0 0 20px var(--dark-blue);
+.primaryButton {
+
+    background: var(--accent);
+
+    color: white;
+
+}
+.primaryButton:hover {
+    background: var(--accent-hover);
+}
+.primaryButton span {
+    margin-left: 18px;
 }
 
-.featureIcon {
-    width: 42px;
-    height: 42px;
+.secondaryButton {
+    border: 1px solid var(--border);
+    background: var(--surface);
+}
 
+.secondaryButton:hover {
+
+    background: var(--surface-hover);
+
+}
+
+.note {
+    margin-top: 20px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.posters {
     display: flex;
     justify-content: center;
     align-items: center;
-
-    border-radius: 12px;
-    background-color: #111827;
-    border: 1px solid var(--border-gray);
-
-    font-size: 22px;
+    gap: 18px;
+    padding: 12px;
 }
 
-.featureCard h3 {
-    margin: 0;
+.poster {
+    width: calc(50% - 9px);
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 18px 36px #0006;
+}
 
-    color: var(--text);
-    font-size: 22px;
+.poster:first-child {
+
+    transform: rotate(-6deg);
+
+}
+.poster:last-child {
+    transform: rotate(6deg) translateY(24px);
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    padding-top: 12px;
+}
+
+.featureCard {
+    padding: 28px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: linear-gradient(145deg, #202838, var(--surface) 65%);
+    box-shadow: 0 8px 24px #0002;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.featureCard:hover {
+    border-color: #53688e;
+    transform: translateY(-4px);
+}
+
+.featureCard:nth-child(2) {
+    background: linear-gradient(145deg, #29243b, var(--surface) 65%);
+}
+
+.featureCard:nth-child(3) {
+    background: linear-gradient(145deg, #1e3034, var(--surface) 65%);
+}
+
+.featureIcon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 24px;
+    border: 1px solid #91b3ff30;
+    border-radius: 14px;
+    background: #8aaaff12;
+    color: #a8c2ff;
+}
+
+.featureIcon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.featureCard:nth-child(2) .featureIcon {
+    color: #c5b1ef;
+    background: #b59ae512;
+    border-color: #b59ae530;
+}
+
+.featureCard:nth-child(3) .featureIcon {
+    color: #90d4cb;
+    background: #90d4cb12;
+    border-color: #90d4cb30;
+}
+
+.featureCard h2 {
+
+    font-size: 20px;
+
+    margin: 14px 0 10px;
+
 }
 
 .featureCard p {
-    margin: 0;
-
-    color: #94a3b8;
-    line-height: 1.5;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.7;
 }
 
-@media (max-width: 850px) {
-    .features {
-        grid-template-columns: 1fr;
-        max-width: 520px;
-    }
-}
-
-@media (max-width: 480px) {
+@media (max-width: 800px) {
     .homePage {
-        padding: 50px 16px;
-        gap: 48px;
+        padding: 36px 20px;
     }
-
-    .hero h1 {
-        font-size: clamp(38px, 13vw, 48px);
-        letter-spacing: -2px;
+    .hero {
+        gap: 24px;
     }
-
-    .description {
-        font-size: 17px;
-    }
-
-    .primaryButton,
-    .secondaryButton {
-        width: 100%;
-        text-align: center;
-    }
-
-    .actions {
-        width: 100%;
+    .features {
+        gap: 20px;
     }
 }
 
+@media (max-width: 700px) {
+    .hero, .features {
+        grid-template-columns: 1fr;
+    }
+    .hero {
+        padding-bottom: 48px;
+    }
+    .posters {
+        max-width: 400px;
+        margin: 12px auto 24px;
+    }
+    .featureCard {
+        padding: 24px;
+    }
+}

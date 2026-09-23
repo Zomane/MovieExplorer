@@ -6,12 +6,13 @@ import Footer from "@/components/ui/Footer";
 
 export const metadata: Metadata = {
   title: 'Movie Explorer',
-  description: 'Каталог фильмов и пользователей'
+  description: 'Каталог фильмов и коллекции зрителей'
 }
 
 export default function Layout({children}: {children: React.ReactNode}) {
   return (
-    <html lang="en">
+    // Dark Reader добавляет атрибуты на html до запуска React.
+    <html lang="ru" suppressHydrationWarning>
       <body >
         <Providers>
           <header className="header"><Navbar/></header>
